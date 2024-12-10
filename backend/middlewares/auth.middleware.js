@@ -1,0 +1,34 @@
+import jwt from "jsonwebtoken"
+import { ApiError } from "../utils/ApiError.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { User } from "../models/user.model.js";
+
+const verifyJWT = asyncHandler(async (req, res, next) => {
+    const { token } = req.cookies;
+
+    if (!token) {
+        return next(new ApiError(401, "Please login to access this resource"))
+    }
+
+    const decodedData = jwt.verify(token, process.env.JWT_SECRET);
+
+    req.user = await User.findById(decodedData._id);
+
+    next();
+})
+
+const authorizedRoles = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return next(
+                new ApiError(403, `Role: ${req.user.role} is not allowed to access this resource`)
+            )
+        }
+        next();
+    }
+}
+
+export {
+    verifyJWT,
+    authorizedRoles
+}
