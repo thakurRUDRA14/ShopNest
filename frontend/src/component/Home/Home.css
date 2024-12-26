@@ -1,0 +1,20 @@
+.banner {
+  position: relative; /* Ensure pseudo-elements are positioned relative to this */
+}
+
+.banner::after {
+  content: "";
+  width: 100vw;
+  height: 100vmin;
+  background-color: #ffffff;
+  position: absolute;
+  top: 0.5px;
+  left: 0;
+  clip-path: polygon(100% 80%, 0 100%, 100% 100%);
+  max-width: 100%;
+}
+@media screen and (max-width: 600px) {
+  .productCard > p {
+    font-size: 1.7vmax;
+  }
+}
