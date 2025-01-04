@@ -71,7 +71,7 @@ const getProductDetails = asyncHandler(async (req, res, next) => {
 })
 
 // Get all product -- Admin
-const getAdminProducts = asyncHandler(async (req, res, next) => {
+const getAdminProducts = asyncHandler(async (req, res) => {
     const products = await Product.find();
     res
         .status(200)
@@ -151,7 +151,7 @@ const deleteProduct = asyncHandler(async (req, res, next) => {
     }
 
     for (const image of product.images) {
-        deleteFromCloudinary(image.public_id);
+        await deleteFromCloudinary(image.public_id, next);
     }
 
     await product.deleteOne();

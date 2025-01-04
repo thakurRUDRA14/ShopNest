@@ -105,7 +105,7 @@ const ProductDetails = () => {
                     <img
                       key={i}
                       src={item.url}
-                      alt={`${i} Slide`}
+                      alt={`${i + 1}th Slide`}
                       className="p-4"
                     />
                   ))}

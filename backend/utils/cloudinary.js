@@ -2,13 +2,13 @@ import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
 import { ApiError } from "./ApiError.js";
 
-const uploadOnCloudinary = async (localFilePath, folder) => {
+const uploadOnCloudinary = async (localFilePath, folder, next) => {
     if (!localFilePath || typeof localFilePath !== "string") {
-        throw new ApiError("Invalid or missing local file path");
+        return next(new ApiError(400, "Invalid or missing local file path"));
     }
 
     if (!folder || typeof folder !== "string") {
-        throw new ApiError("Invalid or missing folder name");
+        return next(new ApiError(400, "Invalid or missing folder name"));
     }
 
     try {
@@ -25,25 +25,29 @@ const uploadOnCloudinary = async (localFilePath, folder) => {
         try {
             fs.unlinkSync(localFilePath);
         } catch (error) {
-            console.error("Error removing local file:", error);
+            console.error(500, "Error removing local file:", error);
         }
 
         return response;
     } catch (error) {
         console.error("Error uploading to Cloudinary:", error);
-        return next(new ApiError("Failed to upload file to Cloudinary"));
+        return next(new ApiError(500, "Failed to upload file to Cloudinary"));
     }
 };
 
-const deleteFromCloudinary = async (public_id) => {
+const deleteFromCloudinary = async (public_id, next) => {
+
+    console.log("I am in delete");
+
+
     if (!public_id || typeof public_id !== "string") {
-        return next(new ApiError("Invalid or missing public ID"));
+        return next(new ApiError(400, "Invalid or missing public ID"));
     }
 
     try {
         await cloudinary.uploader.destroy(public_id);
     } catch (error) {
-        return next(new ApiError("Failed to delete file from Cloudinary"));
+        return next(new ApiError(500, "Failed to delete file from Cloudinary"));
     }
 };
 

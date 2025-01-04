@@ -27,7 +27,6 @@ const errorHandler = (error, req, res, next) => {
         error = new ApiError(400, message);
     }
 
-
     if (error.code === 11000) {
         const message = `Duplicate ${Object.keys(error.keyValue)} Entered`;
         error = new ApiError(400, message);
