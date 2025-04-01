@@ -7,7 +7,7 @@ import { clearErrors, getProduct } from "../../slices/productSlice.js";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../layout/Loader/Loader.jsx";
 import { toast } from "react-toastify"
-import Cover from '../../assets/cover.jfif';
+import Cover from '../../assets/Cover.jfif';
 
 function Home() {
   const dispatch = useDispatch();

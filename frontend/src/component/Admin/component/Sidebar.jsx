@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logo from "../../../assets/logo.png";
+import Logo from "../../../assets/Logo.png";
 import { Link } from "react-router-dom";
 import {
   Accordion,
@@ -27,7 +27,7 @@ const Sidebar = () => {
       {/* Logo Section */}
       <Link to="/" className="flex justify-center p-4 mb-8">
         <img
-          src={logo || "https://res.cloudinary.com/rudra-backend/image/upload/v1734908438/ShopNest/assets/Logo.png"}
+          src={Logo || "https://res.cloudinary.com/rudra-backend/image/upload/v1734908438/ShopNest/assets/Logo.png"}
           alt="ShopNest"
           className="w-32 lg:w-full transition-all duration-300 hover:opacity-80"
         />

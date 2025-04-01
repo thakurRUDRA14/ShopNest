@@ -10,13 +10,13 @@ import { clearErrors, getProduct } from "../../slices/productSlice.js";
 import { useParams } from "react-router";
 
 const categories = [
-  "Laptop",
-  "Footwear",
-  "Bottom",
-  "Tops",
-  "Attire",
-  "Camera",
   "SmartPhones",
+  "Electronics",
+  "Health & Fitness",
+  "Accessories",
+  "Grocery",
+  "Camera",
+  "Laptop",
 ];
 
 const Products = () => {

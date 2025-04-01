@@ -3,7 +3,6 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, IconButton, Typography } from "@mui/material";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import StarIcon from "@mui/icons-material/Star";
 import MetaData from "../../layout/MetaData";

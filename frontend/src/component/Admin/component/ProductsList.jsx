@@ -16,7 +16,7 @@ import {
 
 const ProductList = () => {
   const dispatch = useDispatch();
-  const { error, operationSuccess, products, message } = useSelector(
+  const { error, operationSuccess, products, message, loading } = useSelector(
     (state) => state.adminData
   );
 

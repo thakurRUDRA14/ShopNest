@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@mui/material";
 import MetaData from "../../layout/MetaData";
-import { MailOutline, LockOpen, Face, VerifiedUser } from "@mui/icons-material";
-import Loader from "../../layout/Loader/Loader";
+import { MailOutline, Face, VerifiedUser } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router";
 import {

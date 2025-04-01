@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import UserOptions from './UserOptions';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import logo from "../../../assets/logo.svg";
+import Logo from "../../../assets/Logo.svg";
 
 function Navbar() {
     const { isAuthenticated, user } = useSelector((state) => state.userData)
@@ -33,7 +33,7 @@ function Navbar() {
                 <div className="container mx-auto flex justify-between items-start">
                     <Link to="/" className="text-2xl font-bold text-blue-600 dark:text-white cursor-pointer">
                         <img
-                            src={logo || "https://res.cloudinary.com/rudra-backend/image/upload/v1734908438/ShopNest/assets/Logo.png"}
+                            src={Logo || "https://res.cloudinary.com/rudra-backend/image/upload/v1734908438/ShopNest/assets/Logo.png"}
                             alt="ShopNest"
                             className="h-10 transition-all duration-200 "
                         />
