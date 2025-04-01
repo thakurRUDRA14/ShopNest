@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:4000', // Your backend server
+        target: 'https://shopnest-backend-ivory.vercel.app/', // Your backend server
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/api/v1'), // rewrite path if i dont want to use /v1/
       },
