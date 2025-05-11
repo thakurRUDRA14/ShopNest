@@ -13,7 +13,7 @@ const sendEmail = async (options) => {
     });
 
     const mailOptions = {
-        from: process.env.SMPT_SERVICE,
+        from: `"ShopNest" <${process.env.SMPT_MAIL}>`, // for custom name(optional)
         to: options.email,
         subject: options.subject,
         text: options.message

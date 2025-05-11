@@ -208,7 +208,7 @@ const updateProfile = asyncHandler(async (req, res, next) => {
     if (req.file?.path) {
         const avatarLocalPath = req.file.path;
 
-        avatar = await uploadOnCloudinary(avatarLocalPath);
+        avatar = await uploadOnCloudinary(avatarLocalPath,"avatars");
 
         if (!avatar) {
             return next(new ApiError(400, "Failed to upload avatar"));

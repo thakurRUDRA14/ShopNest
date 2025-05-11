@@ -18,7 +18,7 @@ app.use(express.json({ limit: "16kb" }))      // data recieving from form.
 app.use(express.urlencoded({ extended: true, limit: "16kb" })) // data recieving from URL.
 app.use(express.static("public")) // data recieving from file folder (stored in local).
 app.use(cookieParser())           // data recieving from cookies or performing CRUD operation on cookie.
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true })) // like app.use(express.urlencoded({}) but with bodyParser
 
 
 // importing routes
