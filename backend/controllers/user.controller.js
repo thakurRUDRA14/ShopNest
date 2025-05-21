@@ -78,34 +78,69 @@ const logoutUser = asyncHandler(async (req, res, next) => {
     res.status(200).json(new ApiResponse(200, null, "User logged out successfully"))
 })
 
-//Forget password
+// Forget password
 const forgetPassword = asyncHandler(async (req, res, next) => {
-    const { email } = req.body
-    const user = await User.findOne({ email })
+    const { email } = req.body;
 
-    if (!user) {
-        return next(new ApiError(404, "User not found"))
+    if (!email) {
+        return next(new ApiError(400, "Email is required"));
     }
 
-    // Get resetPasswordToken
+    const user = await User.findOne({ email });
 
-    const resetToken = user.getResetPasswordToken()
+    if (!user) {
+        return next(new ApiError(404, "User not found with this email address"));
+    }
 
+    const resetToken = user.getResetPasswordToken();
     await user.save({ validateBeforeSave: false });
 
-    const resetPasswordURL = `${req.protocol}://${req.get("host")}/api/v1/user/password/reset/${resetToken}`
+    const resetPasswordURL = `${req.protocol}://${req.get("host")}/api/v1/user/password/reset/${resetToken}`;
 
-    const message = `Your password reset token is :- \n\n ${resetPasswordURL} \n\nIf you have not requested this email, please ignore it.`
+    const message = `
+    <html>
+      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e1e1e1; border-radius: 5px;">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <h1 style="color: #4a90e2;">ShopNest Password Assistance</h1>
+          </div>
+          
+          <p>Hello ${user.name || 'ShopNest Customer'},</p>
+          
+          <p>We received a request to reset your ShopNest account password. Click the link below to proceed:</p>
+          
+          <div style="text-align: center; margin: 25px 0;">
+            <a href="${resetPasswordURL}" 
+               style="background-color: #4a90e2; color: white; padding: 10px 20px; 
+                      text-decoration: none; border-radius: 4px; display: inline-block;">
+              Reset Your Password
+            </a>
+          </div>
+          
+          <p>If you didn't request this password reset, please ignore this email or contact support if you have concerns.</p>
+          
+          <p style="font-size: 0.9em; color: #999;">
+            This link will expire in ${process.env.RESET_PASSWORD_EXPIRE || '15'} minutes.
+          </p>
+          
+          <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e1e1e1; font-size: 0.9em;">
+            <p>Thank you,<br>The ShopNest Team</p>
+          </div>
+        </div>
+      </body>
+    </html>
+    `;
 
     try {
-
         await sendEmail({
             email: user.email,
-            subject: `Ecommerce Password Recovery`,
-            message,
-        })
+            subject: `ShopNest Password Reset Request`,
+            html: message,
+        });
 
-        res.status(200).json(new ApiResponse(200, null, `Email sent to ${user.email} successfully.`))
+        res.status(200).json(
+            new ApiResponse(200, null, `Password reset link has been sent to ${user.email}. Please check your inbox.`)
+        );
 
     } catch (error) {
         await User.updateOne(
@@ -120,7 +155,9 @@ const forgetPassword = asyncHandler(async (req, res, next) => {
             }
         );
 
-        return next(new ApiError(500, "Error sending email. Please try again later."))
+        return next(
+            new ApiError(500, "Failed to send password reset email. Please try again later.")
+        );
     }
 
 })
@@ -208,7 +245,7 @@ const updateProfile = asyncHandler(async (req, res, next) => {
     if (req.file?.path) {
         const avatarLocalPath = req.file.path;
 
-        avatar = await uploadOnCloudinary(avatarLocalPath,"avatars");
+        avatar = await uploadOnCloudinary(avatarLocalPath, "avatars");
 
         if (!avatar) {
             return next(new ApiError(400, "Failed to upload avatar"));
