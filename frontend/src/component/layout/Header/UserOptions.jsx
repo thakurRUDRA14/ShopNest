@@ -1,96 +1,140 @@
-import React, { useState } from "react";
-import Backdrop from "@mui/material/Backdrop";
-import SpeedDial from "@mui/material/SpeedDial";
-import SpeedDialAction from "@mui/material/SpeedDialAction";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import PersonIcon from "@mui/icons-material/Person";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import ListAltIcon from "@mui/icons-material/ListAlt";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../../../slices/userSlice";
+import React, { useState, useRef, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
+import { useDispatch } from "react-redux"
+import { logout } from "../../../slices/userSlice"
 import ProfileImg from "../../../assets/Profile.png"
+import { FiUser, FiLogOut, FiList, FiGrid } from "react-icons/fi"
+import { motion, AnimatePresence } from "framer-motion"
 
-function UserOptions({ user }) {
-  const { cartItems } = useSelector((state) => state.cartData);
+function UserOptions({ user, mobile = false }) {
+    const [open, setOpen] = useState(false)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const dropdownRef = useRef(null)
 
-  const [open, setOpen] = useState(false);
-  const dispatch = useDispatch();
-  const navigate = useNavigate()
-  const options = [
-    { icon: <ListAltIcon />, name: "Orders", func: orders },
-    { icon: <PersonIcon />, name: "Profile", func: account },
-    // {
-    //   icon: (
-    //     <ShoppingCartIcon
-    //       style={{ color: cartItems.length > 0 ? "tomato" : "unset" }}
-    //     />
-    //   ),
-    //   name: `Cart(${cartItems.length})`,
-    //   func: cart,
-    // },
-    { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
-  ];
-
-  if (user?.role === "admin") {
-    options.unshift({
-      icon: <DashboardIcon />,
-      name: "Dashboard",
-      func: dashboard,
-    });
-  }
-
-  function dashboard() {
-    navigate("/admin");
-  }
-
-  function orders() {
-    navigate("/orders");
-  }
-  function account() {
-    navigate("/me");
-  }
-  function cart() {
-    navigate("/cart");
-  }
-  function logoutUser() {
-    dispatch(logout());
-    toast.success("Logout Successfully");
-  }
-
-  return (
-    <>
-      <Backdrop open={open} style={{ zIndex: "10" }} />
-      <SpeedDial
-        ariaLabel="tooltip example"
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-        style={{ zIndex: "11" }}
-        open={open}
-        direction="down"
-        className="z-50 md:relative  w-12 md:ml-8 -top-3"
-        icon={
-          <img
-            className="h-full rounded-2xl md:rounded-full"
-            src={user.avatar?.url ? user.avatar.url : ProfileImg}
-            alt="Profile"
-          />
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setOpen(false)
+            }
         }
-      >
-        {options.map((item) => (
-          <SpeedDialAction
-            key={item.name}
-            icon={item.icon}
-            tooltipTitle={item.name}
-            onClick={item.func}
-            tooltipOpen={window.innerWidth <= 600 ? true : false}
-          />
-        ))}
-      </SpeedDial>
-    </>
-  );
-};
 
-export default UserOptions;
+        document.addEventListener("mousedown", handleClickOutside)
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside)
+        }
+    }, [])
+
+    const options = [
+        { icon: <FiList size={18} />, name: "Orders", func: orders },
+        { icon: <FiUser size={18} />, name: "Profile", func: account },
+        { icon: <FiLogOut size={18} />, name: "Logout", func: logoutUser },
+    ]
+
+    if (user?.role === "admin") {
+        options.unshift({
+            icon: <FiGrid size={18} />,
+            name: "Dashboard",
+            func: dashboard,
+        })
+    }
+
+    function dashboard() {
+        navigate("/admin")
+        setOpen(false)
+    }
+
+    function orders() {
+        navigate("/orders")
+        setOpen(false)
+    }
+    
+    function account() {
+        navigate("/me")
+        setOpen(false)
+    }
+    
+    function logoutUser() {
+        dispatch(logout())
+        toast.success("Logout Successfully")
+        setOpen(false)
+    }
+
+    // Animation variants
+    const dropdownVariants = {
+        hidden: { 
+            opacity: 0, 
+            y: -10,
+            scale: 0.95
+        },
+        visible: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: {
+                type: "spring",
+                damping: 20,
+                stiffness: 300
+            }
+        },
+        exit: {
+            opacity: 0,
+            y: -10,
+            scale: 0.95,
+            transition: {
+                duration: 0.15
+            }
+        }
+    }
+
+    return (
+        <div className="relative" ref={dropdownRef}>
+            <button
+                onClick={() => setOpen(!open)}
+                className="flex items-center space-x-2 focus:outline-none group"
+                aria-expanded={open}
+                aria-haspopup="true"
+            >
+                <img
+                    className="h-8 w-8 rounded-full object-cover border-2 border-white group-hover:border-indigo-400 transition-all duration-300"
+                    src={user.avatar?.url ? user.avatar.url : ProfileImg}
+                    alt="Profile"
+                />
+                {!mobile && (
+                    <span className="text-gray-700 group-hover:text-indigo-600 transition-colors duration-300 hidden md:inline-block">
+                        {user.name.split(" ")[0]}
+                    </span>
+                )}
+            </button>
+
+            <AnimatePresence>
+                {open && (
+                    <motion.div
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        variants={dropdownVariants}
+                        className={`absolute ${mobile ? 'relative mt-2' : 'right-0 mt-2'} w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-100 overflow-hidden`}
+                    >
+                        {options.map((item) => (
+                            <motion.button
+                                key={item.name}
+                                onClick={item.func}
+                                whileHover={{ backgroundColor: "#f5f3ff" }}
+                                whileTap={{ scale: 0.98 }}
+                                className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:text-indigo-600 transition-colors duration-200 flex items-center"
+                            >
+                                <span className="mr-3">{item.icon}</span>
+                                {item.name}
+                            </motion.button>
+                        ))}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    )
+}
+
+export default UserOptions

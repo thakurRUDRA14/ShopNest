@@ -8,8 +8,8 @@ import { clearErrors, loadUser } from './slices/userSlice.js'
 
 
 function App() {
-  useEffect(async () => {
-    await store.dispatch(loadUser());
+  useEffect(() => {
+    store.dispatch(loadUser());
     store.dispatch(clearErrors());
 
     webFont.load({

@@ -1,132 +1,164 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import UserOptions from './UserOptions';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Logo from "../../../assets/Logo.svg";
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { FiShoppingCart, FiUser, FiMenu, FiX, FiHeart } from "react-icons/fi"
+import UserOptions from './UserOptions'
+import Logo from "../../../assets/Logo.png";
+import Search from '../../Product/Search'
 
 function Navbar() {
     const { isAuthenticated, user } = useSelector((state) => state.userData)
-    const { cartItems } = useSelector((state) => state.cartData);
-    const [isOpen, setIsOpen] = useState(false);
-    const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
-    const [scroll, setScroll] = useState(false);
+    const { cartItems } = useSelector((state) => state.cartData)
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [activeLink, setActiveLink] = useState('')
+    const [scroll, setScroll] = useState(false)
+
+
+    const NavLinks = [
+        { path: '/', name: 'Home' },
+        { path: '/collections', name: 'Shop' },
+        // { path: '/categories', name: 'Categories' },
+        { path: '/about', name: 'About' },
+        { path: '/contact', name: 'Contact' }
+    ]
+
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 64) {
                 setScroll(true)
-            }
-            else {
+            } else {
                 setScroll(false)
             }
         }
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll)
         return () => {
-            window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("scroll", handleScroll)
         }
     }, [])
+
+    const handleLinkClick = (path) => {
+        setActiveLink(path)
+        setMobileMenuOpen(false)
+    }
+
     return (
         <>
-            <nav className={`bg-red-500  shadow-md h-[68px] py-4 z-40 max-w-screen-2xl mx-auto md:px-20 px-2 sticky left-0 top-0 right-0 transition-all ease-in-out ${scroll ? "fixed top-5 w-11/12 rounded-md shadow-lg bg-opacity-90 duration-700" : "w-full"}`}>
-                <div className="container mx-auto flex justify-between items-start">
-                    <Link to="/" className="text-2xl font-bold text-blue-600 dark:text-white cursor-pointer">
-                        <img
-                            src={Logo || "https://res.cloudinary.com/rudra-backend/image/upload/v1734908438/ShopNest/assets/Logo.png"}
-                            alt="ShopNest"
-                            className="h-10 transition-all duration-200 "
-                        />
-                    </Link>
-
-                    {/* Hamburger Menu Icon */}
-                    <button
-                        onClick={toggleMenu}
-                        className="block md:hidden text-gray-700 dark:text-white focus:outline-none"
-                    >
-                        <svg
-                            className="w-6 h-6"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
+            <header className={`bg-white shadow-sm sticky top-0 z-50 transition-all duration-500 ${scroll ? "shadow-lg" : ""}`}>
+                {/* Top Navigation Bar */}
+                <div className="container mx-auto px-4 py-3">
+                    <div className="flex items-center justify-between">
+                        {/* Mobile Menu Button */}
+                        <button
+                            className="md:hidden text-gray-700 hover:text-indigo-600 transition-colors"
+                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
-                            ></path>
-                        </svg>
-                    </button>
+                            {mobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+                        </button>
 
-                    {/* Desktop Menu */}
-                    <ul className="hidden md:flex space-x-6 items-center">
-                        <li>
-                            <Link to="/" className="text-gray-700 font-medium dark:text-white hover:border-b-2">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/collections" className="text-gray-700 font-medium dark:text-white hover:border-b-2">Collections</Link>
-                        </li>
-                        <li>
-                            <Link to="/about" className="text-gray-700 font-medium dark:text-white hover:border-b-2">About</Link>
-                        </li>
-                        <li>
-                            <Link to="/contact" className="text-gray-700 font-medium dark:text-white hover:border-b-2">Contact</Link>
-                        </li>
-                    </ul>
-                    <div className='hidden h-8 md:flex items-start'>
-                        <ul className="hidden md:flex space-x-4 items-center">
-                            <li>
-                                <Link to="/search" className="text-gray-700 dark:text-white hover:text-slate-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="4"><path d="M21 38c9.389 0 17-7.611 17-17S30.389 4 21 4S4 11.611 4 21s7.611 17 17 17Z" /><path strokeLinecap="round" d="M26.657 14.343A7.98 7.98 0 0 0 21 12a7.98 7.98 0 0 0-5.657 2.343m17.879 18.879l8.485 8.485" /></g></svg>
-                                </Link>
-                            </li>
+                        {/* Logo with 3D effect */}
+                        <Link
+                            to="/"
+                            className="text-2xl font-bold text-primary hover:scale-105 transition-transform duration-300"
+                            onClick={() => handleLinkClick('/')}
+                        >
+                            <div className="flex items-center">
+                                <img
+                                    src={Logo || "https://res.cloudinary.com/rudra-backend/image/upload/v1734908438/ShopNest/assets/Logo.png"}
+                                    alt="ShopNest"
+                                    className="h-10 transition-all duration-300 hover:drop-shadow-[0_5px_5px_rgba(79,70,229,0.3)]"
+                                />
+                            </div>
+                        </Link>
 
-                            {isAuthenticated ? <></> :
-                                <li>
-                                    <Link to="/login" className="text-gray-700 dark:text-white hover:text-slate-300">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path fill="currentColor" fillRule="evenodd" d="M8 7a4 4 0 1 1 8 0a4 4 0 0 1-8 0m0 6a5 5 0 0 0-5 5a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3a5 5 0 0 0-5-5z" clipRule="evenodd" /></svg>
-                                    </Link>
-                                </li>
-                            }
-                            <li>
-                                <Link to="/cart" className={`text-gray-700 dark:text-white hover:text-slate-300 `}>
-                                    <ShoppingCartIcon />
-                                    <p className={`h-4 w-4 text-center text-xs border-2 text-black font-semibold bg-white  rounded-full relative -top-2 right-3 ${cartItems.length > 0 ? "inline-block " : "hidden"}`}>{cartItems.length}</p>
+                        {/* Search Bar - Hidden on mobile */}
+                        <div className="hidden md:flex flex-1 mx-6">
+                            <Search />
+                        </div>
+
+                        {/* Navigation Icons */}
+                        <div className="flex items-center space-x-4">
+                            {/* <Link to="/wishlist" className="p-2 text-gray-700 hover:text-primary relative transition-colors">
+                                <FiHeart size={20} />
+                                <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center transform hover:scale-110 transition-transform">
+                                    3
+                                </span>
+                            </Link> */}
+                            <Link
+                                to="/cart"
+                                className="p-2 text-gray-700 hover:text-indigo-600 relative transition-colors"
+                            >
+                                <FiShoppingCart size={20} />
+                                {cartItems.length > 0 && (
+                                    <span className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-4 w-4 flex items-center justify-center transform hover:scale-110 transition-transform">
+                                        {cartItems.length}
+                                    </span>
+                                )}
+                            </Link>
+                            {isAuthenticated ? (
+                                <UserOptions user={user} />
+                            ) : (
+                                <Link
+                                    to="/login"
+                                    className="p-2 text-gray-700 hover:text-indigo-600 transition-colors"
+                                >
+                                    <FiUser size={20} />
                                 </Link>
-                            </li>
-                        </ul>
-                        {(isAuthenticated && <UserOptions user={user} />)}
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Mobile Search - Visible only on mobile */}
+                    <div className="mt-3 md:hidden">
+                        <Search />
                     </div>
                 </div>
 
                 {/* Mobile Menu */}
-                {isOpen && (
-                    <ul className="md:hidden space-y-2 mt-4">
-                        <li>
-                            <Link to="/" className="text-gray-700 dark:text-white hover:text-blue-600">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/products" className="text-gray-700 dark:text-white hover:text-blue-600">Products</Link>
-                        </li>
-                        <li>
-                            <Link to="/contact" className="text-gray-700 dark:text-white hover:text-blue-600">Contact</Link>
-                        </li>
-                        <li>
-                            <Link to="/about" className="text-gray-700 dark:text-white hover:text-blue-600">About</Link>
-                        </li>
-                        <li>
-                            <Link to="/search" className="text-gray-700 dark:text-white hover:text-blue-600">Search</Link>
-                        </li>
-                        {isAuthenticated ? <li>
-                            {isAuthenticated && <UserOptions user={user} />}
-                        </li> : <li>
-                            <Link to="/login" className="text-gray-700 dark:text-white hover:text-blue-600">Login</Link>
-                        </li>}
-                    </ul>
+                {mobileMenuOpen && (
+                    <div className="md:hidden bg-white border-t border-gray-200 py-2 animate-slideDown">
+                        <div className="container mx-auto px-4">
+                            <nav className="flex flex-col space-y-2">
+                                {NavLinks.map((item) => (
+                                    <Link
+                                        key={item.path}
+                                        to={item.path}
+                                        className={`py-2 px-3 rounded-md transition-all duration-200 ${activeLink === item.path ? 'bg-indigo-50 text-indigo-600 font-medium' : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-600'}`}
+                                        onClick={() => handleLinkClick(item.path)}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                ))}
+                            </nav>
+                        </div>
+                    </div>
                 )}
-            </nav>
+
+                {/* Desktop Navigation */}
+                <nav className={`hidden md:block bg-gradient-to-r from-indigo-600 to-indigo-700 text-white transition-all duration-500 ${scroll ? "fixed top-0 left-0 right-0 shadow-xl" : ""}`}>
+                    <div className="container mx-auto px-4">
+                        <div className="flex items-center justify-between py-3">
+                            <div className="flex items-center space-x-6">
+                                {NavLinks.map((item) => (
+                                    <Link
+                                        key={item.path}
+                                        to={item.path}
+                                        className={`relative px-3 py-1 rounded transition-all duration-200 hover:bg-indigo-700 hover:shadow-md ${activeLink === item.path ? 'font-medium' : ''}`}
+                                        onClick={() => handleLinkClick(item.path)}
+                                    >
+                                        {item.name}
+                                        {activeLink === item.path && (
+                                            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4/5 h-0.5 bg-white rounded-full"></div>
+                                        )}
+                                    </Link>
+                                ))}
+                            </div>
+                            {/* <div className="text-sm bg-white/10 px-3 py-1 rounded-full animate-pulse">
+                                Summer Sale: 30% off sitewide! Use code <span className="font-bold">SUMMER30</span>
+                            </div> */}
+                        </div>
+                    </div>
+                </nav>
+            </header>
         </>
     )
 }
