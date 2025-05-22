@@ -342,6 +342,65 @@ const deleteUser = asyncHandler(async (req, res, next) => {
     res.status(200).json(new ApiResponse(200, null, "User deleted successfully",))
 })
 
+const contactForm = asyncHandler(async (req, res, next) => {
+    const { name, email, message } = req.body;
+
+    if (!name || !email || !message) {
+        return next(new ApiError(400, "All fields are required"));
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return next(new ApiError(400, "Please enter a valid email address"));
+    }
+
+    const emailMessage = `
+    <html>
+      <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+        <div style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e1e1e1; border-radius: 5px;">
+          <div style="text-align: center; margin-bottom: 20px;">
+            <h1 style="color: #4a90e2;">New Contact Form Submission</h1>
+          </div>
+          
+          <p><strong>From:</strong> ${name} (${email})</p>
+          
+          <div style="background-color: #f5f5f5; padding: 15px; border-radius: 4px; margin: 15px 0;">
+            <p style="white-space: pre-wrap;">${message}</p>
+          </div>
+          
+          <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e1e1e1; font-size: 0.9em;">
+            <p>This message was sent via your ShopNest contact form.</p>
+          </div>
+        </div>
+      </body>
+    </html>
+    `;
+
+    try {
+        await sendEmail({
+            email: process.env.CONTACT_FORM_RECIPIENT,
+            subject: `New Contact Form Submission from ${name}`,
+            html: emailMessage,
+        });
+
+        //Send confirmation to the user
+        await sendEmail({
+            email: email,
+            subject: `Thank you for contacting ShopNest`,
+            html: `<p>Dear ${name},</p><p>We've received your message and will get back to you soon.</p>`
+        });
+
+        res.status(200).json(
+            new ApiResponse(200, null, "Your message has been sent successfully!")
+        );
+
+    } catch (error) {
+        return next(
+            new ApiError(500, "Failed to send your message. Please try again later.")
+        );
+    }
+});
+
 export {
     registerUser,
     loginUser,
@@ -354,5 +413,6 @@ export {
     getAllUsers,
     getAnyUser,
     updateUserRole,
-    deleteUser
+    deleteUser,
+    contactForm
 }
