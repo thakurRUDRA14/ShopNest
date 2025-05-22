@@ -33,6 +33,8 @@ import OrderList from './component/Admin/component/OrderList.jsx'
 import AdminLayout from './component/Admin/AdminLayout.jsx'
 import ProcessOrder from './component/Admin/component/ProcessOrder.jsx'
 import ProductReviews from './component/Admin/component/ProductReviews.jsx'
+import Contact from './component/layout/Header/Contact.jsx'
+import About from './component/layout/Header/About.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -40,6 +42,8 @@ const router = createBrowserRouter(
       <Route path='/' element={<App />}>
         <Route path='' element={<Home />} />
         <Route path='collections' element={<Products />} />
+        <Route path='about' element={<About />} />        
+        <Route path='contact' element={<Contact />} />
         <Route path='products' element={<Products />} />
         <Route path='product/:productId' element={<ProductDetails />} />
         <Route path='products/:keyword' element={<Products />} />
