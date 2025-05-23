@@ -10,7 +10,6 @@ import Home from './component/Home/Home.jsx'
 import ProductDetails from './component/Product/ProductDetails.jsx'
 import Products from './component/Product/Products.jsx'
 import Search from './component/Product/Search.jsx'
-import LoginSignUp from './component/User/LoginSignUp.jsx'
 import Profile from './component/User/Profile.jsx'
 import UpdateProfile from './component/User/UpdateProfile.jsx'
 import UpdatePassword from './component/User/UpdatePassword.jsx'
@@ -35,6 +34,8 @@ import ProcessOrder from './component/Admin/component/ProcessOrder.jsx'
 import ProductReviews from './component/Admin/component/ProductReviews.jsx'
 import Contact from './component/layout/Header/Contact.jsx'
 import About from './component/layout/Header/About.jsx'
+import Login from './component/User/Auth/Login.jsx'
+import Register from './component/User/Auth/Register.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -48,7 +49,8 @@ const router = createBrowserRouter(
         <Route path='product/:productId' element={<ProductDetails />} />
         <Route path='products/:keyword' element={<Products />} />
         <Route path='search' element={<Search />} />
-        <Route path='login' element={<LoginSignUp />} />
+        <Route path='login' element={<Login />} />
+        <Route path='register' element={<Register />} />
         <Route path='me' element={<Profile />} />
         <Route path='me/update' element={<UpdateProfile />} />
         <Route path='password/update' element={<UpdatePassword />} />

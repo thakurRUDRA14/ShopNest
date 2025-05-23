@@ -3,10 +3,10 @@ import axios from "axios";
 
 export const login = createAsyncThunk(
     "user/login",
-    async ({ loginEmail, loginPassword }, { rejectWithValue }) => {
+    async (userLoginForm, { rejectWithValue }) => {
         try {
             const config = { headers: { "Content-Type": "application/json" } };
-            const Response = await axios.post(`/api/user/login`, { email: loginEmail, password: loginPassword }, config);
+            const Response = await axios.post(`/api/user/login`, userLoginForm, config);
             return Response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
@@ -117,7 +117,7 @@ const userSlice = createSlice({
     reducers: {
         clearErrors: (state) => {
             state.error = null;
-            state.message = null;
+            state.message = "";
         },
         resetUpdateStatus: (state) => {
             state.isUpdated = false;
