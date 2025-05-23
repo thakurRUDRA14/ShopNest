@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import MetaData from "../layout/MetaData";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiSearch } from "react-icons/fi";
 
 function Search() {
   const [keyword, setKeyword] = useState("");
@@ -17,22 +17,17 @@ function Search() {
 
   return (
     <>
-      <MetaData title="Search A Product -- ECOMMERCE" />
-      <form
-        className=" px-60 fixed inset-0 flex items-center justify-center gap-5 bg-gray-300"
-        onSubmit={searchSubmitHandler}
-      >
+      <form className="relative w-full max-w-xl" onSubmit={searchSubmitHandler}>
         <input
           type="text"
-          placeholder="Search a Product ..."
-          className="shadow-md bg-slate-100 border-none text-gray-700 px-6 py-4 w-1/2 outline-none rounded-md font-light text-lg font-cursive box-border h-12 duration-100 hover:bg-white sm:w-full sm:text-sm sm:h-14"
+          placeholder="Search for products..."
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300 hover:shadow-md"
+          value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
         />
-        <input
-          type="submit"
-          value="Search"
-          className="h-12 w-1/12 sm:w-1/3 sm:h-14 bg-red-500 text-white font-light text-lg rounded-md cursor-pointer transition-all duration-500 hover:bg-blue-600"
-        />
+        <button type='submit' className="absolute right-3 top-2.5 text-gray-500 hover:text-indigo-600 transition-colors">
+          <FiSearch size={20} />
+        </button>
       </form>
     </>
   );
