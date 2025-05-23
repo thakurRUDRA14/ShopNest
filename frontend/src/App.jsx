@@ -7,21 +7,21 @@ import { store } from './store.js'
 import { clearErrors, loadUser } from './slices/userSlice.js'
 
 function App() {
-useEffect(() => {
-  const loadUserData = async () => {
-    await store.dispatch(loadUser());
-    store.dispatch(clearErrors());
-  };
-  loadUserData();
-}, []);
+  useEffect(() => {
+    const loadUserData = async () => {
+      await store.dispatch(loadUser());
+      store.dispatch(clearErrors());
+    };
+    loadUserData();
+  }, []);
 
-useEffect(() => {
-  webFont.load({
-    google: {
-      families: ['Roboto', 'Droid Sans', 'Chilanka']
-    }
-  });
-}, []);
+  useEffect(() => {
+    webFont.load({
+      google: {
+        families: ['Roboto', 'Droid Sans', 'Chilanka']
+      }
+    });
+  }, []);
 
 
   return (

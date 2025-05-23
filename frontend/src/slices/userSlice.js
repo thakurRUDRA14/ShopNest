@@ -78,10 +78,10 @@ export const updatePassword = createAsyncThunk(
 
 export const forgetPassword = createAsyncThunk(
     "user/forgetPassword",
-    async (email, { rejectWithValue }) => {
+    async (forgetPasswordForm, { rejectWithValue }) => {
         try {
             const config = { headers: { "Content-Type": "application/json" } };
-            const Response = await axios.post(`/api/user/password/forget`, email, config);
+            const Response = await axios.post(`/api/user/password/forget`, forgetPasswordForm, config);
             return Response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
@@ -137,7 +137,6 @@ const userSlice = createSlice({
             .addCase(login.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                state.message = action.payload.message;
             })
             .addCase(register.pending, (state) => {
                 state.loading = true;
@@ -151,7 +150,6 @@ const userSlice = createSlice({
             .addCase(register.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                state.message = action.payload.message;
             })
             .addCase(loadUser.pending, (state) => {
                 state.loading = true;
@@ -165,7 +163,6 @@ const userSlice = createSlice({
             .addCase(loadUser.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                state.message = action.payload.message;
             })
             .addCase(logout.pending, (state) => {
                 state.loading = true;
@@ -179,7 +176,6 @@ const userSlice = createSlice({
             .addCase(logout.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                state.message = action.payload.message;
             })
             .addCase(updateProfile.pending, (state) => {
                 state.loading = true;
@@ -193,7 +189,6 @@ const userSlice = createSlice({
             .addCase(updateProfile.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                state.message = action.payload.message;
             })
             .addCase(updatePassword.pending, (state) => {
                 state.loading = true;
@@ -207,7 +202,6 @@ const userSlice = createSlice({
             .addCase(updatePassword.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                state.message = action.payload.message;
             })
             .addCase(forgetPassword.pending, (state) => {
                 state.loading = true;
@@ -231,7 +225,6 @@ const userSlice = createSlice({
             .addCase(resetPassword.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
-                state.message = action.payload.message;
             })
     },
 });

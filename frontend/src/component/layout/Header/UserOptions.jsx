@@ -50,12 +50,12 @@ function UserOptions({ user, mobile = false }) {
         navigate("/orders")
         setOpen(false)
     }
-    
+
     function account() {
         navigate("/me")
         setOpen(false)
     }
-    
+
     function logoutUser() {
         dispatch(logout())
         toast.success("Logout Successfully")
@@ -64,8 +64,8 @@ function UserOptions({ user, mobile = false }) {
 
     // Animation variants
     const dropdownVariants = {
-        hidden: { 
-            opacity: 0, 
+        hidden: {
+            opacity: 0,
             y: -10,
             scale: 0.95
         },

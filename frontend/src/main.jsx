@@ -1,16 +1,17 @@
-import { createRoot } from 'react-dom/client'
-import { Provider } from "react-redux"
-import { store } from './store.js'
-import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
+import { createRoot } from 'react-dom/client'
+import { Provider } from "react-redux"
+import { Flip, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { store } from './store.js'
+import App from './App.jsx'
 import Home from './component/Home/Home.jsx'
 import ProductDetails from './component/Product/ProductDetails.jsx'
 import Products from './component/Product/Products.jsx'
-import Search from './component/Product/Search.jsx'
 import Profile from './component/User/Profile.jsx'
+import Login from './component/User/Login.jsx'
+import Register from './component/User/Register.jsx'
 import UpdateProfile from './component/User/UpdateProfile.jsx'
 import UpdatePassword from './component/User/UpdatePassword.jsx'
 import ForgetPassword from './component/User/ForgetPassword.jsx'
@@ -34,8 +35,6 @@ import ProcessOrder from './component/Admin/component/ProcessOrder.jsx'
 import ProductReviews from './component/Admin/component/ProductReviews.jsx'
 import Contact from './component/layout/Header/Contact.jsx'
 import About from './component/layout/Header/About.jsx'
-import Login from './component/User/Auth/Login.jsx'
-import Register from './component/User/Auth/Register.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -43,12 +42,11 @@ const router = createBrowserRouter(
       <Route path='/' element={<App />}>
         <Route path='' element={<Home />} />
         <Route path='collections' element={<Products />} />
-        <Route path='about' element={<About />} />        
+        <Route path='about' element={<About />} />
         <Route path='contact' element={<Contact />} />
         <Route path='products' element={<Products />} />
         <Route path='product/:productId' element={<ProductDetails />} />
         <Route path='products/:keyword' element={<Products />} />
-        <Route path='search' element={<Search />} />
         <Route path='login' element={<Login />} />
         <Route path='register' element={<Register />} />
         <Route path='me' element={<Profile />} />
@@ -83,17 +81,15 @@ createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <RouterProvider router={router} />
     <ToastContainer
-      position="top-right"
+      position="top-center"
       autoClose={4000}
       hideProgressBar={false}
-      newestOnTop={false}
+      newestOnTop
       closeOnClick
       rtl={false}
-      pauseOnFocusLoss
       draggable
-      pauseOnHover
       theme="light"
-      transition:Flip
+      transition={Flip}
     />
   </Provider>,
 )
