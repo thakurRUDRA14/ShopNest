@@ -57,7 +57,7 @@ const ContactUs = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="w-full min-h-screen bg-gray-50">
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

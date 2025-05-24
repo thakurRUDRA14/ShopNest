@@ -4,7 +4,7 @@ import { FiSearch } from "react-icons/fi";
 
 function Search() {
   const [keyword, setKeyword] = useState("");
-  const navigate = useNavigate(); // Fix: Updated Navigate to useNavigate hook
+  const navigate = useNavigate();
 
   const searchSubmitHandler = (e) => {
     e.preventDefault();

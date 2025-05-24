@@ -25,11 +25,11 @@ function App() {
 
 
   return (
-    <>
+    <div className='h-screen'>
       <Navbar />
-      <Outlet />
+      <div className='flex justify-center'><Outlet /></div>
       <Footer />
-    </>
+    </div>
   )
 }
 

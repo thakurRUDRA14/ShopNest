@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { FiShoppingCart, FiUser, FiMenu, FiX, FiHeart } from "react-icons/fi"
 import UserOptions from './UserOptions'
 import Logo from "../../../assets/Logo.png";
-import Search from '../../Product/Search'
+import Search from './Search'
 
 function Navbar() {
     const { isAuthenticated, user } = useSelector((state) => state.userData)

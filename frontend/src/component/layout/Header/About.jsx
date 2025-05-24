@@ -65,7 +65,7 @@ const About = () => {
     ]
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="w-full min-h-screen bg-gray-50">
             {/* Hero Section with Parallax Effect */}
             <motion.div
                 initial={{ opacity: 0 }}
