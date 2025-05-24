@@ -64,7 +64,7 @@ function Footer() {
           whileInView="visible"
           viewport={{ once: false }}
           variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8"
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-8 mb-8"
         >
           <motion.div variants={itemVariants}>
             <h3 className="text-xl font-bold mb-4">ShopNest</h3>
