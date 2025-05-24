@@ -307,8 +307,10 @@ const ProductDetails = () => {
             {product.reviews && product.reviews.length > 0 ? (
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-6">
                 <AnimatePresence>
-                  {product.reviews.map((review, index) => (
-                    <ReviewCard review={review} index={index} />
+                  {product.reviews.map((review) => (
+                    <div key={review._id}>
+                      <ReviewCard review={review} />
+                    </div>
                   ))}
                 </AnimatePresence>
               </div>

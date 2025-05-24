@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import profilePng from "../../assets/Profile.png";
 import StarRating from "./StarRating";
 
-const ReviewCard = ({ index, review }) => {
+const ReviewCard = ({ review }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const wordCount = review.comment.split(/\s+/).length;
@@ -28,14 +28,14 @@ const ReviewCard = ({ index, review }) => {
   return (
     <>
       <motion.div
-        layoutId={`card-${index}`}
+        layoutId={`card-${review._id}`}
         animate={{ y: 0 }}
         whileHover={{ y: -5 }}
         className="flex flex-col items-center p-6 shadow-md border border-gray-100 w-full rounded-lg bg-white hover:shadow-lg transition-shadow cursor-pointer"
         onClick={() => setIsModalOpen(true)}
       >
         <motion.img
-          layoutId={`avatar-${index}`}
+          layoutId={`avatar-${review._id}`}
           src={review.avatar?.url || profilePng}
           alt="User"
           className="w-16 h-16 md:w-20 md:h-20 rounded-full mb-4 object-cover border-2 border-primary"
@@ -43,19 +43,19 @@ const ReviewCard = ({ index, review }) => {
 
         />
         <motion.p
-          layoutId={`name-${index}`}
+          layoutId={`name-${review._id}`}
           className="font-medium text-gray-800"
         >
           {review.name}
         </motion.p>
         <motion.div
-          layoutId={`rating-${index}`}
+          layoutId={`rating-${review._id}`}
           className="my-2"
         >
           <StarRating rating={review.rating} />
         </motion.div>
         <motion.span
-          layoutId={`comment-preview-${index}`}
+          layoutId={`comment-preview-${review._id}`}
           className="text-gray-600 text-sm text-center italic line-clamp-2"
         >
           "{review.comment}"
@@ -69,7 +69,7 @@ const ReviewCard = ({ index, review }) => {
             onClick={() => setIsModalOpen(false)}
           >
             <motion.div
-              layoutId={`card-${index}`}
+              layoutId={`card-${review._id}`}
               className={`bg-white rounded-lg ${modalWidthClass} w-full p-6 relative max-h-[90vh] overflow-y-auto`}
               onClick={(e) => e.stopPropagation()}
             >
@@ -84,25 +84,25 @@ const ReviewCard = ({ index, review }) => {
 
               <div className="flex flex-col items-center">
                 <motion.img
-                  layoutId={`avatar-${index}`}
+                  layoutId={`avatar-${review._id}`}
                   src={review.avatar?.url || profilePng}
                   alt="User"
                   className="w-20 h-20 rounded-full mb-4 object-cover border-2 border-primary"
                 />
                 <motion.p
-                  layoutId={`name-${index}`}
+                  layoutId={`name-${review._id}`}
                   className="font-medium text-gray-800 text-lg"
                 >
                   {review.name}
                 </motion.p>
                 <motion.div
-                  layoutId={`rating-${index}`}
+                  layoutId={`rating-${review._id}`}
                   className="my-3"
                 >
                   <StarRating rating={review.rating} />
                 </motion.div>
                 <motion.div
-                  layoutId={`comment-preview-${index}`}
+                  layoutId={`comment-preview-${review._id}`}
                   className="flex justify-center mt-4"
                 >
                   <div>
