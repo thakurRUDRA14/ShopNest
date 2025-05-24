@@ -1,136 +1,214 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import Loader from "../layout/Loader/Loader.jsx";
-import ProductCard from "../Home/ProductCard.jsx";
-import Slider from "@mui/material/Slider";
-import Typography from "@mui/material/Typography";
-import { toast } from 'react-toastify';
-import MetaData from "../layout/MetaData.jsx";
-import { clearErrors, getProduct } from "../../slices/productSlice.js";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-
-const categories = [
-  "SmartPhones",
-  "Electronics",
-  "Health & Fitness",
-  "Accessories",
-  "Grocery",
-  "Camera",
-  "Laptop",
-];
+import { motion, AnimatePresence } from "motion/react";
+import Loader from "../layout/Loader/Loader.jsx";
+import ProductCard from "./ProductCard.jsx";
+import MetaData from "../layout/MetaData.jsx";
+import Filters from "./Filters.jsx";
 
 const Products = () => {
-  const dispatch = useDispatch();
   const { keyword } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
-  const [price, setPrice] = useState([0, 25000]);
-  const [category, setCategory] = useState("");
-  const [ratings, setRatings] = useState(0);
+  const [showFilters, setShowFilters] = useState(false);
+
   const {
     products,
     loading,
-    error,
     resultPerPage,
     filteredProductsCount,
   } = useSelector((state) => state.productsData);
 
+  // Calculate total pages
+  const totalPages = Math.ceil(filteredProductsCount / resultPerPage);
 
-  const priceHandler = (event, newPrice) => {
-    setPrice(newPrice);
+  // Generate page numbers with ellipsis logic
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxVisiblePages = 5;
+
+    pages.push(1);
+
+    if (totalPages <= maxVisiblePages + 2) {
+      for (let i = 2; i < totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      const halfVisible = Math.floor((maxVisiblePages - 2) / 2);
+      let start = Math.max(2, currentPage - halfVisible);
+      let end = Math.min(totalPages - 1, start + maxVisiblePages - 3);
+
+      if (currentPage <= halfVisible + 2) {
+        end = maxVisiblePages;
+      } else if (currentPage >= totalPages - halfVisible - 1) {
+        start = totalPages - maxVisiblePages + 1;
+      }
+
+      if (start > 2) {
+        pages.push('...');
+      }
+
+      for (let i = start; i <= end; i++) {
+        if (i !== 1 && i !== totalPages) {
+          pages.push(i);
+        }
+      }
+
+      if (end < totalPages - 1) {
+        pages.push('...');
+      }
+    }
+
+    if (totalPages > 1) {
+      pages.push(totalPages);
+    }
+
+    return pages;
   };
 
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch(clearErrors());
-    }
-    dispatch(getProduct({ keyword, currentPage, price, category, ratings }));
-  }, [dispatch, keyword, currentPage, price, category, ratings, toast, error]);
+  if (loading && !products) return <Loader />;
 
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <>
-          <MetaData title="PRODUCTS -- ECOMMERCE" />
-          <h2 className="text-center text-2xl font-semibold mt-8 border-b-2 pb-2 mx-auto w-48 text-gray-700">
-            Products
-          </h2>
-          <div className="flex">
-            <div className="w-1/3 top-32 left-10 bg-white p-6 shadow-lg rounded-lg">
-              <Typography className="text-lg font-medium mb-4">Price</Typography>
-              <Slider
-                value={price}
-                onChange={priceHandler}
-                valueLabelDisplay="auto"
-                aria-labelledby="range-slider"
-                min={0}
-                max={25000}
-              />
+      <MetaData title="PRODUCTS -- SHOPNEST" />
+      <div className="container mx-auto p-4 sm:py-8">
+        <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
+          {keyword ? `Search Results for "${keyword}"` : "All Products"}
+          <span className="block text-sm font-normal text-gray-500 mt-2">
+            Showing {products?.length || 0} of {filteredProductsCount} products
+          </span>
+        </h2>
 
-              <Typography className="text-lg font-medium mt-6 mb-4">
-                Categories
-              </Typography>
-              <ul className="space-y-2">
-                {categories.map((category) => (
-                  <li
-                    key={category}
-                    className="cursor-pointer text-gray-600 hover:text-red-500"
-                    onClick={() => setCategory(category)}
-                  >
-                    {category}
-                  </li>
-                ))}
-              </ul>
-
-              <fieldset className="mt-6 border p-4">
-                <Typography className="text-lg font-medium mb-4">
-                  Ratings Above
-                </Typography>
-                <Slider
-                  value={ratings}
-                  onChange={(e, newRating) => setRatings(newRating)}
-                  aria-labelledby="continuous-slider"
-                  valueLabelDisplay="auto"
-                  min={0}
-                  max={5}
-                />
-              </fieldset>
-            </div>
-            <div className="flex flex-wrap justify-center gap-6 mt-8">
-              {products &&
-                products.map((product) => (
-                  <ProductCard key={product._id} product={product} />
-                ))}
-            </div>
-
-          </div>
-          {resultPerPage < filteredProductsCount && (
-            <div className="flex justify-center mt-12">
-              <button
-                className={`bg-white border rounded-md px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer ${currentPage <= 1 ? 'hidden' : ''}`}
-                onClick={() => {
-                  if (currentPage > 1) {
-                    setCurrentPage(currentPage - 1);
-                  }
+        <div className="flex flex-col md:flex-row gap-2 md:gap-8">
+          {/* Filters Sidebar - Mobile */}
+          <div className="flex justify-end md:hidden sticky top-32 z-10">
+            <motion.button
+              onClick={() => setShowFilters(!showFilters)}
+              className="flex items-center justify-center w-10 h-10 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 transition-colors z-10 relative"
+              aria-label={showFilters ? 'Hide filters' : 'Show filters'}
+              whileTap={{ scale: 0.95 }}
+            >
+              <motion.svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                animate={{
+                  scale: showFilters ? [1, 1.1, 1] : 1,
+                  rotate: showFilters ? [0, 10, -10, 0] : 0
                 }}
+                transition={{ duration: 0.5 }}
               >
-                Previous
-              </button>
-              <Typography className="bg-white border rounded-md px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer">{currentPage}</Typography>
-              <button
-                className={`bg-white border rounded-md px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer ${resultPerPage * currentPage > filteredProductsCount ? 'hidden' : ''}`}
-                onClick={() => {
-                  if (resultPerPage * currentPage < filteredProductsCount) {
-                    setCurrentPage(currentPage + 1);
-                  }
-                }}
-              >  Next </button>
+                <path
+                  fillRule="evenodd"
+                  d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
+                  clipRule="evenodd"
+                />
+              </motion.svg>
+            </motion.button>
+
+            <AnimatePresence>
+              {showFilters && (
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                    scale: 0.5,
+                    y: -20,
+                    originY: 0,
+                    originX: 1
+                  }}
+                  animate={{
+                    opacity: 1,
+                    scale: 1,
+                    y: 10
+                  }}
+                  exit={{
+                    opacity: 0,
+                    scale: 0.5,
+                    y: -20
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 25
+                  }}
+                  className="absolute right-6 mt-7 w-64 bg-white rounded-lg shadow-2xl z-20 p-4"
+                >
+                  <Filters currentPage={currentPage} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Filters Sidebar - Desktop */}
+          <div className="hidden md:block w-72 flex-shrink-0">
+            <div className="sticky top-24 h-[calc(100vh-6rem)] overflow-y-auto pb-6">
+              <Filters currentPage={currentPage} />
             </div>
-          )}
-        </>
-      )}
+          </div>
+
+          {/* Products Grid */}
+          <div className="flex-1">
+            {products && products.length > 0 ? (
+              <>
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 xl:gap-6">
+                  {products.map((product) => (
+                    <motion.div
+                      key={product._id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ProductCard product={product} />
+                    </motion.div>
+                  ))}
+                </div>
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <div className="flex justify-center mt-12">
+                    <nav className="flex items-center space-x-1">
+                      <button
+                        disabled={currentPage <= 1}
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        className={`px-3 py-1 rounded-lg border transition-all ${currentPage <= 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200'}`}
+                      >
+                        &laquo; <span className="hidden lg:inline-block">Prev</span>
+                      </button>
+
+                      {getPageNumbers().map((page, index) => (
+                        page === '...' ? (
+                          <span key={index} className="px-3 py-1 text-gray-500">...</span>
+                        ) : (
+                          <button
+                            key={index}
+                            onClick={() => setCurrentPage(page)}
+                            className={`px-3 py-1 rounded-lg border transition-all ${currentPage === page ? 'bg-blue-100 text-blue-600 border-blue-200' : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200'}`}
+                          >
+                            {page}
+                          </button>
+                        )
+                      ))}
+
+                      <button
+                        disabled={currentPage >= totalPages}
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        className={`px-3 py-1 rounded-lg border transition-all ${currentPage >= totalPages ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200'}`}
+                      >
+                        <span className="hidden lg:inline-block">Next</span> &raquo;
+                      </button>
+                    </nav>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="h-screen text-center py-12 bg-white rounded-xl shadow-sm border border-gray-100">
+                <h3 className="text-xl font-medium text-gray-600">No products found</h3>
+                <p className="text-gray-500 mt-2">Try adjusting your filters or search term</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </>
   );
 };

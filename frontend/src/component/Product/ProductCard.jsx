@@ -19,8 +19,6 @@ const ProductCard = ({ product }) => {
     toast.success("Item Added To Cart");
   };
 
-
-
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'short' };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -73,6 +71,7 @@ const ProductCard = ({ product }) => {
       whileHover="hover"
     >
       <motion.div
+        layoutId={`product-${product._id}`}
         className="flex justify-center h-full min-w-fit gap-2 lg:block bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow duration-300"
         whileHover="hover"
       >
