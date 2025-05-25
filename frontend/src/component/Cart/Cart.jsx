@@ -28,7 +28,7 @@ function Cart() {
   };
 
   const checkoutHandler = () => {
-    navigate("/login?redirect=/order/shipping");
+    navigate("/login?redirect=/shipping");
   };
 
   const [scroll, setScroll] = useState(false);

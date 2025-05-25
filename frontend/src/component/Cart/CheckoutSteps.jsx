@@ -1,7 +1,21 @@
 import { motion } from "motion/react";
 import { FaTruck, FaCheckCircle, FaMoneyBillWave } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
 
-const CheckoutSteps = ({ activeStep }) => {
+const CheckoutSteps = () => {
+  const location = useLocation();
+
+  let activeStep;
+  if (location.pathname.includes("shipping")) {
+    activeStep = 0;
+  } else if (location.pathname.includes("confirmOrder")) {
+    activeStep = 1;
+  } else if (location.pathname.includes("payment")) {
+    activeStep = 2;
+  } else {
+    activeStep = 0;
+  }
+
   const steps = [
     {
       label: "Shipping Details",
@@ -31,7 +45,7 @@ const CheckoutSteps = ({ activeStep }) => {
           layoutId="progress-line"
           className="absolute top-5 left-0 h-1 bg-primary z-0 transition-all duration-500 ease-in-out"
           style={{
-            width: `${(activeStep / (steps.length - 1)) * 100}%`,
+            width: `${((activeStep / (steps.length - 1)) * 100) || 25}%`,
             maxWidth: '80%',
             left: '10%'
           }}
@@ -47,14 +61,15 @@ const CheckoutSteps = ({ activeStep }) => {
               transition={{ delay: index * 0.1 }}
               className="flex flex-col items-center"
             >
-              <div
+              <Link
+                to={item.label === "Shipping Details" ? "/shipping" : item.label === "Confirm Order" ? "/confirmOrder" : item.label === "Payment" ? "/payment" : "/"}
                 className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 ${activeStep >= index
                   ? "bg-primary text-white shadow-lg"
                   : "bg-gray-200 text-gray-500"
                   } transition-all duration-300`}
               >
                 {item.icon}
-              </div>
+              </Link>
               <span
                 className={`text-xs md:text-sm font-medium text-center ${activeStep >= index ? "text-primary" : "text-gray-500"
                   }`}

@@ -17,6 +17,7 @@ import UpdatePassword from './component/User/UpdatePassword.jsx'
 import ForgetPassword from './component/User/ForgetPassword.jsx'
 import ResetPassword from './component/User/ResetPassword.jsx'
 import Cart from './component/Cart/Cart.jsx'
+import CheckoutLayout from './component/Cart/CheckoutLayout.jsx'
 import Shipping from './component/Cart/Shipping.jsx'
 import ConfirmOrder from './component/Cart/ConfirmOrder.jsx'
 import Payment from './component/Cart/Payment.jsx'
@@ -55,9 +56,11 @@ const router = createBrowserRouter(
         <Route path='password/forget' element={<ForgetPassword />} />
         <Route path='password/reset/:token' element={<ResetPassword />} />
         <Route path='cart' element={<Cart />} />
-        <Route path='order/shipping' element={<Shipping />} />
-        <Route path='order/confirm' element={<ConfirmOrder />} />
-        <Route path='order/payment' element={<Payment />} />
+        <Route element={<CheckoutLayout />}>
+          <Route path='shipping' element={<Shipping />} />
+          <Route path='confirmOrder' element={<ConfirmOrder />} />
+          <Route path='payment' element={<Payment />} />
+        </Route>
         <Route path='success' element={<OrderSuccess />} />
         <Route path='orders' element={<MyOrders />} />
         <Route path='order/:id' element={<OrderDetails />} />
