@@ -3,6 +3,7 @@ import { Product } from "../models/product.model.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { ApiError } from "../utils/ApiError.js"
+import { ApiFeatures } from "../utils/ApiFeatures.js";
 
 // New order
 const newOrder = asyncHandler(async (req, res, next) => {
@@ -49,10 +50,18 @@ const myOrders = asyncHandler(async (req, res, next) => {
     if (!req.user || !req.user._id) {
         return res.status(400).json({ message: "User not authenticated" });
     }
-    // const user = req.user._id;
-    const orders = await Order.find({ user: req.user._id });
-    res.status(200).json(new ApiResponse(200, orders, "All orders fetched successfully"))
-})
+
+    const resultPerPage = 3;
+    const ordersCount = await Order.countDocuments({ user: req.user._id });
+
+    const apiFeatures = new ApiFeatures(Order.find({ user: req.user._id }), req.query).pagination(resultPerPage); //creating query
+
+    const orders = await apiFeatures.query; // Execute the query
+
+    res.status(200).json(
+        new ApiResponse(200, { orders, ordersCount, resultPerPage }, "All orders fetched successfully")
+    );
+});
 
 //   Get all orders --Admin
 const getAllOrders = asyncHandler(async (req, res, next) => {
