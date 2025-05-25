@@ -1,42 +1,51 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import MetaData from "../layout/MetaData";
-import {
-  Home,
-  LocationCity,
-  PinDrop,
-  Public,
-  Phone,
-  TransferWithinAStation,
-} from "@mui/icons-material";
 import { Country, State } from "country-state-city";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { saveShippingInfo } from "../../slices/cartSlice";
 import { toast } from "react-toastify";
 import CheckoutSteps from "./CheckoutSteps";
+import { motion } from "framer-motion";
+import {
+  FaHome,
+  FaCity,
+  FaMapMarkerAlt,
+  FaGlobeAmericas,
+  FaPhoneAlt,
+  FaArrowRight
+} from "react-icons/fa";
 
 const Shipping = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector((state) => state.userData)
+  const { isAuthenticated } = useSelector((state) => state.userData);
   const { shippingInfo } = useSelector((state) => state.cartData);
 
-  const [address, setAddress] = useState(shippingInfo.address || "");
-  const [city, setCity] = useState(shippingInfo.city || "");
-  const [state, setState] = useState(shippingInfo.state || "");
-  const [country, setCountry] = useState(shippingInfo.country || "");
-  const [pinCode, setPinCode] = useState(shippingInfo.pinCode || "");
-  const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo || "");
+  const [formData, setFormData] = useState({
+    address: shippingInfo.address || "",
+    city: shippingInfo.city || "",
+    state: shippingInfo.state || "",
+    country: shippingInfo.country || "",
+    pinCode: shippingInfo.pinCode || "",
+    phoneNo: shippingInfo.phoneNo || "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const shippingSubmit = (e) => {
     e.preventDefault();
-    if (phoneNo.length !== 10) {
+    if (formData.phoneNo.length !== 10) {
       toast.error("Phone Number should be 10 digits long");
       return;
-    } 0
-    dispatch(
-      saveShippingInfo({ address, city, state, country, pinCode, phoneNo })
-    );
+    }
+    dispatch(saveShippingInfo(formData));
     navigate("/order/confirm");
   };
 
@@ -44,119 +53,150 @@ const Shipping = () => {
     if (!isAuthenticated) {
       navigate("/login?redirect=/order/shipping");
     }
-  }, [isAuthenticated, navigate])
+  }, [isAuthenticated, navigate]);
+
+  const formVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  const inputVariants = {
+    focus: { scale: 1.02, boxShadow: "0 0 0 2px rgba(239, 68, 68, 0.5)" },
+  };
+
   return (
     <>
-      <MetaData title="Shipping Details" />
-      <CheckoutSteps activeStep={0} />
-
-      <div className="flex justify-center items-center flex-col w-full h-screen bg-gray-100">
-        <div className="bg-white w-full max-w-md p-6 shadow-md rounded-lg">
-          <h2 className="text-2xl font-semibold text-center mb-4 border-b pb-2">
-            Shipping Details
-          </h2>
-
-          <form
-            className="space-y-6"
-            encType="multipart/form-data"
-            onSubmit={shippingSubmit}
+      <MetaData title="SHIPPING -- SHOPNEST" />
+      <div className="container w-full">
+        <CheckoutSteps activeStep={0} />
+        <div className="min-h-screen w-full bg-gray-50 py-8 px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden"
           >
-            <div className="flex items-center space-x-3">
-              <Home className="text-gray-500" />
-              <input
-                type="text"
-                placeholder="Address"
-                required
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
+            <div className="p-6 w-full">
+              <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+                Shipping Details
+              </h2>
 
-            <div className="flex items-center space-x-3">
-              <LocationCity className="text-gray-500" />
-              <input
-                type="text"
-                placeholder="City"
-                required
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
+              <form onSubmit={shippingSubmit} className="space-y-5">
+                {[
+                  {
+                    icon: <FaHome className="text-gray-500" />,
+                    name: "address",
+                    placeholder: "Address",
+                    type: "text",
+                    value: formData.address,
+                  },
+                  {
+                    icon: <FaCity className="text-gray-500" />,
+                    name: "city",
+                    placeholder: "City",
+                    type: "text",
+                    value: formData.city,
+                  },
+                  {
+                    icon: <FaMapMarkerAlt className="text-gray-500" />,
+                    name: "pinCode",
+                    placeholder: "Pin Code",
+                    type: "number",
+                    value: formData.pinCode,
+                  },
+                  {
+                    icon: <FaPhoneAlt className="text-gray-500" />,
+                    name: "phoneNo",
+                    placeholder: "Phone Number",
+                    type: "number",
+                    value: formData.phoneNo,
+                  },
+                ].map((field, index) => (
+                  <motion.div
+                    key={field.name}
+                    variants={formVariants}
+                    initial="hidden"
+                    animate="visible"
+                    transition={{ delay: index * 0.1 }}
+                    className="flex items-center space-x-3"
+                  >
+                    {field.icon}
+                    <motion.input
+                      whileFocus="focus"
+                      variants={inputVariants}
+                      type={field.type}
+                      name={field.name}
+                      placeholder={field.placeholder}
+                      required
+                      value={field.value}
+                      onChange={handleChange}
+                      className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-red-500 transition-all"
+                    />
+                  </motion.div>
+                ))}
 
-            <div className="flex items-center space-x-3">
-              <PinDrop className="text-gray-500" />
-              <input
-                type="number"
-                placeholder="Pin Code"
-                required
-                value={pinCode}
-                onChange={(e) => setPinCode(e.target.value)}
-                className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
-
-            <div className="flex items-center space-x-3">
-              <Phone className="text-gray-500" />
-              <input
-                type="number"
-                placeholder="Phone Number"
-                required
-                value={phoneNo}
-                onChange={(e) => setPhoneNo(e.target.value)}
-                className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
-
-            <div className="flex items-center space-x-3">
-              <Public className="text-gray-500" />
-              <select
-                required
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              >
-                <option value="">Country</option>
-                {Country &&
-                  Country.getAllCountries().map((item) => (
-                    <option key={item.isoCode} value={item.isoCode}>
-                      {item.name}
-                    </option>
-                  ))}
-              </select>
-            </div>
-
-            {country && (
-              <div className="flex items-center space-x-3">
-                <TransferWithinAStation className="text-gray-500" />
-                <select
-                  required
-                  value={state}
-                  onChange={(e) => setState(e.target.value)}
-                  className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                <motion.div
+                  variants={formVariants}
+                  transition={{ delay: 0.4 }}
+                  className="flex items-center space-x-3"
                 >
-                  <option value="">State</option>
-                  {State &&
-                    State.getStatesOfCountry(country).map((item) => (
+                  <FaGlobeAmericas className="text-gray-500" />
+                  <select
+                    name="country"
+                    required
+                    value={formData.country}
+                    onChange={handleChange}
+                    className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-red-500 appearance-none bg-white"
+                  >
+                    <option value="">Country</option>
+                    {Country.getAllCountries().map((item) => (
                       <option key={item.isoCode} value={item.isoCode}>
                         {item.name}
                       </option>
                     ))}
-                </select>
-              </div>
-            )}
+                  </select>
+                </motion.div>
 
-            <button
-              type="submit"
-              className={`w-full py-2 bg-red-500 text-white rounded-lg transition-all ${state ? "hover:bg-red-600" : "opacity-50 cursor-not-allowed"
-                }`}
-              onClick={shippingSubmit}
-              disabled={!state}
-            >
-              Continue
-            </button>
-          </form>
+                {formData.country && (
+                  <motion.div
+                    variants={formVariants}
+                    transition={{ delay: 0.5 }}
+                    className="flex items-center space-x-3"
+                  >
+                    <FaMapMarkerAlt className="text-gray-500" />
+                    <select
+                      name="state"
+                      required
+                      value={formData.state}
+                      onChange={handleChange}
+                      className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-red-500 appearance-none bg-white"
+                    >
+                      <option value="">State</option>
+                      {State.getStatesOfCountry(formData.country).map((item) => (
+                        <option key={item.isoCode} value={item.isoCode}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                  </motion.div>
+                )}
+
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  disabled={!formData.state}
+                  className={`w-full py-3 px-4 rounded-lg font-medium flex items-center justify-center space-x-2 transition-all ${formData.state
+                    ? "bg-primary text-white"
+                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    }`}
+                >
+                  <span>Continue</span>
+                  <FaArrowRight />
+                </motion.button>
+              </form>
+            </div>
+          </motion.div>
         </div>
       </div>
     </>

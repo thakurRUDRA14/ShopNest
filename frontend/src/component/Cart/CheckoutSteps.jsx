@@ -1,58 +1,78 @@
-import React from "react";
-import Typography from "@mui/material/Typography";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import { motion } from "motion/react";
+import { FaTruck, FaCheckCircle, FaMoneyBillWave } from "react-icons/fa";
 
 const CheckoutSteps = ({ activeStep }) => {
   const steps = [
     {
       label: "Shipping Details",
-      icon: <LocalShippingIcon className="text-xl md:text-2xl" />,
+      icon: <FaTruck className="text-xl md:text-2xl" />,
     },
     {
       label: "Confirm Order",
-      icon: <LibraryAddCheckIcon className="text-xl md:text-2xl" />,
+      icon: <FaCheckCircle className="text-xl md:text-2xl" />,
     },
     {
       label: "Payment",
-      icon: <AccountBalanceIcon className="text-xl md:text-2xl" />,
+      icon: <FaMoneyBillWave className="text-xl md:text-2xl" />,
     },
   ];
 
+  const stepVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
-    <>
-      <Stepper
-        alternativeLabel
-        activeStep={activeStep}
-        className="flex flex-col items-center mt-8"
-      >
-        {steps.map((item, index) => (
-          <Step
-            key={index}
-            active={activeStep === index}
-            completed={activeStep >= index}
-            className="flex items-center justify-center"
-          >
-            <StepLabel
-              className={`${activeStep >= index ? "text-red-500" : "text-gray-500"
-                } flex flex-col items-center`}
-              icon={item.icon}
+    <div className="w-full px-4 py-8">
+      <div className="flex justify-center relative">
+        {/* Progress line */}
+        <div className="absolute top-5 left-0 right-0 h-1 bg-gray-200 z-0 mx-auto w-4/5"></div>
+        <motion.div
+          layoutId="progress-line"
+          className="absolute top-5 left-0 h-1 bg-primary z-0 transition-all duration-500 ease-in-out"
+          style={{
+            width: `${(activeStep / (steps.length - 1)) * 100}%`,
+            maxWidth: '80%',
+            left: '10%'
+          }}
+        ></motion.div>
+
+        <div className="flex justify-between w-full max-w-3xl relative z-10">
+          {steps.map((item, index) => (
+            <motion.div
+              key={index}
+              initial="hidden"
+              animate="visible"
+              variants={stepVariants}
+              transition={{ delay: index * 0.1 }}
+              className="flex flex-col items-center"
             >
-              <Typography
-                className={`${activeStep >= index ? "text-red-500" : "text-gray-500"
-                  } text-sm md:text-base`}
+              <div
+                className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 ${activeStep >= index
+                  ? "bg-primary text-white shadow-lg"
+                  : "bg-gray-200 text-gray-500"
+                  } transition-all duration-300`}
+              >
+                {item.icon}
+              </div>
+              <span
+                className={`text-xs md:text-sm font-medium text-center ${activeStep >= index ? "text-primary" : "text-gray-500"
+                  }`}
               >
                 {item.label}
-              </Typography>
-            </StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-    </>
+              </span>
+              {activeStep === index && (
+                <motion.div
+                  className="w-2 h-2 bg-primary rounded-full mt-1"
+                  animate={{ scale: [1, 1.5, 1] }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                />
+              )}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 
