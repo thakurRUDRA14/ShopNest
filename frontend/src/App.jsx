@@ -4,16 +4,9 @@ import webFont from "webfontloader"
 import { Outlet } from 'react-router-dom'
 import Navbar from './component/layout/Header/Navbar.jsx'
 import { store } from './store.js'
-import { clearErrors, loadUser } from './slices/userSlice.js'
+import { loadUser } from './slices/userSlice.js'
 
 function App() {
-  useEffect(() => {
-    const loadUserData = async () => {
-      await store.dispatch(loadUser());
-      store.dispatch(clearErrors());
-    };
-    loadUserData();
-  }, []);
 
   useEffect(() => {
     webFont.load({
@@ -21,15 +14,17 @@ function App() {
         families: ['Roboto', 'Droid Sans', 'Chilanka']
       }
     });
+    store.dispatch(loadUser());
   }, []);
 
-
   return (
-    <div className='h-screen'>
-      <Navbar />
-      <div className='flex justify-center'><Outlet /></div>
-      <Footer />
-    </div>
+    <>
+      <div className='h-screen'>
+        <Navbar />
+        <div className='flex justify-center'><Outlet /></div>
+        <Footer />
+      </div>
+    </>
   )
 }
 

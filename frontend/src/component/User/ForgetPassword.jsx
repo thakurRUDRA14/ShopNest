@@ -22,19 +22,20 @@ const ForgetPassword = () => {
   };
 
   useEffect(() => {
-
     if (user) {
       setFormData({ email: user.email })
-    }
-    if (error) {
-      toast.error(error);
     }
     if (message) {
       toast.success(message);
     }
-    dispatch(clearErrors());
+  }, [dispatch, message]);
 
-  }, [dispatch, toast, message, error]);
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+  }, [error, dispatch])
 
   return (
     <>

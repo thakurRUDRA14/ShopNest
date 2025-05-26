@@ -61,18 +61,20 @@ const UpdateProfile = () => {
       setAvatarPreview(user.avatar.url);
     }
 
-    if (error) {
-      toast.error(error);
-      dispatch(clearErrors());
-    }
-
     if (isUpdated) {
       toast("Profile Updated Successfully");
       dispatch(resetUpdateStatus());
       dispatch(loadUser())
       navigate("/me");
     }
-  }, [dispatch, navigate, toast, error, isUpdated, isAuthenticated]);
+  }, [dispatch, navigate, isUpdated, isAuthenticated]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+  }, [error, dispatch])
 
   return (
     <>

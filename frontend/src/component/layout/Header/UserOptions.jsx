@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { useDispatch } from "react-redux"
-import { logout } from "../../../slices/userSlice"
+import { clearErrors, logout } from "../../../slices/userSlice"
 import ProfileImg from "../../../assets/Profile.png"
 import { FiUser, FiLogOut, FiList, FiGrid } from "react-icons/fi"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence } from "motion/react"
 
 function UserOptions({ user, mobile = false }) {
     const [open, setOpen] = useState(false)
@@ -13,7 +13,6 @@ function UserOptions({ user, mobile = false }) {
     const navigate = useNavigate()
     const dropdownRef = useRef(null)
 
-    // Close dropdown when clicking outside
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -26,6 +25,8 @@ function UserOptions({ user, mobile = false }) {
             document.removeEventListener("mousedown", handleClickOutside)
         }
     }, [])
+
+
 
     const options = [
         { icon: <FiList size={18} />, name: "Orders", func: orders },
@@ -56,9 +57,10 @@ function UserOptions({ user, mobile = false }) {
         setOpen(false)
     }
 
-    function logoutUser() {
-        dispatch(logout())
+    async function logoutUser() {
+        await dispatch(logout())
         toast.success("Logout Successfully")
+        dispatch(clearErrors());
         setOpen(false)
     }
 

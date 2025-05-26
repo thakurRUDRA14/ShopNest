@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, IconButton, Typography } from "@mui/material";
@@ -23,17 +23,19 @@ const ProductReviews = () => {
   const [productId, setProductId] = useState("");
 
   useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch(clearErrors());
-    }
-
     if (operationSuccess) {
       toast.success(message);
       dispatch(getAllReviews(productId));
       dispatch(resetOperationStatus());
     }
-  }, [dispatch, error, operationSuccess, productId]);
+  }, [dispatch, operationSuccess, productId]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+  }, [error, dispatch])
 
   const productReviewsSubmitHandler = (e) => {
     e.preventDefault();

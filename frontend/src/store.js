@@ -5,6 +5,7 @@ import cartSlice from "./slices/cartSlice.js";
 import orderSlice from "./slices/orderSlice.js"
 import reviewSlice from "./slices/reviewSlice.js"
 import adminSlice from "./slices/adminSlice.js"
+
 export const store = configureStore({
     reducer: {
         productsData: productSlice,

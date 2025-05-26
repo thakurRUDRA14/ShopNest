@@ -35,16 +35,19 @@ const UpdatePassword = () => {
     if (!isAuthenticated) {
       navigate("/login");
     }
-    if (error) {
-      toast.error(error);
-      dispatch(clearErrors());
-    }
     if (isUpdated) {
       toast("Password Updated Successfully");
       dispatch(resetUpdateStatus());
       navigate("/me");
     }
-  }, [dispatch, navigate, toast, error, isUpdated, isAuthenticated]);
+  }, [dispatch, navigate, isUpdated, isAuthenticated]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+  }, [error, dispatch])
 
   return (
     <>

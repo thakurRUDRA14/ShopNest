@@ -70,6 +70,8 @@ const reviewSlice = createSlice({
         builder
             .addCase(newReview.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(newReview.fulfilled, (state, action) => {
                 state.loading = false;
@@ -82,6 +84,8 @@ const reviewSlice = createSlice({
             })
             .addCase(getAllReviews.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(getAllReviews.fulfilled, (state, action) => {
                 state.loading = false;
@@ -94,6 +98,8 @@ const reviewSlice = createSlice({
             })
             .addCase(deleteReviews.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(deleteReviews.fulfilled, (state, action) => {
                 state.loading = false;

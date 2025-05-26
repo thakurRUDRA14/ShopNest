@@ -60,6 +60,14 @@ const ProductDetails = () => {
   };
 
   useEffect(() => {
+    if (operationSuccess) {
+      toast.success(message);
+      dispatch(resetOperationStatus());
+    }
+    dispatch(getProductDetails(productId));
+  }, [dispatch, productId, operationSuccess]);
+
+  useEffect(() => {
     if (productError) {
       toast.error(productError);
       dispatch(clearProductErrors());
@@ -68,14 +76,7 @@ const ProductDetails = () => {
       toast.error(reviewError);
       dispatch(clearReviewErrors());
     }
-
-    if (operationSuccess) {
-      toast.success(message);
-      dispatch(resetOperationStatus());
-    }
-
-    dispatch(getProductDetails(productId));
-  }, [dispatch, productId, productError, reviewError, operationSuccess]);
+  }, [productError, reviewError, dispatch])
 
   // Animation variants
   const containerVariants = {
@@ -109,12 +110,12 @@ const ProductDetails = () => {
   return (
     <>
       <MetaData title={`${product.name} -- ShopNest`} />
-      <div>
+      <div className="lg:w-4/5">
         <motion.div
           initial="hidden"
           animate="visible"
           variants={containerVariants}
-          className="flex flex-col md:flex-row bg-white p-6 gap-6"
+          className="w-full flex flex-col md:flex-row bg-white p-6 gap-6"
         >
           {/* Product Images */}
           <motion.div

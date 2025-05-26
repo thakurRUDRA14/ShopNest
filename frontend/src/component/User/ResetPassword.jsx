@@ -33,16 +33,19 @@ const ResetPassword = () => {
   };
 
   useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch(clearErrors());
-    }
     if (isUpdated) {
       toast("Password reset Successfully");
       dispatch(resetUpdateStatus());
       navigate("/login");
     }
-  }, [dispatch, navigate, toast, error, isUpdated, isAuthenticated]);
+  }, [dispatch, navigate, isUpdated, isAuthenticated]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+  }, [error, dispatch])
 
   return (
     <>

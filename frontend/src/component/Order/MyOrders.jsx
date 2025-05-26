@@ -22,13 +22,15 @@ const MyOrders = () => {
     if (!isAuthenticated) {
       navigate("/login?=/orders");
     }
+    dispatch(myOrders(currentPage));
+  }, [dispatch, isAuthenticated, currentPage, navigate]);
 
+  useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-    dispatch(myOrders(currentPage));
-  }, [dispatch, error, isAuthenticated, currentPage, navigate]);
+  }, [error, dispatch])
 
   const containerVariants = {
     hidden: { opacity: 0 },

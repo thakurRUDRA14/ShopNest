@@ -20,14 +20,17 @@ const Login = () => {
     const { error, isAuthenticated, loading } = useSelector((state) => state.userData);
 
     useEffect(() => {
-        if (error) {
-            toast.error(error);
-            dispatch(clearErrors());
-        }
         if (isAuthenticated && !loading) {
             navigate(redirect);
         }
     }, [isAuthenticated, loading, navigate, redirect]);
+
+    useEffect(() => {
+        if (error) {
+            toast.error(error);
+            dispatch(clearErrors());
+        }
+    }, [error, dispatch])
 
     const handleInputChange = (e) => {
         const { name, value } = e.target

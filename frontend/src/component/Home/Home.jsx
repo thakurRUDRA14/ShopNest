@@ -103,12 +103,15 @@ function Home() {
   const newArrivals = products?.slice(0, 8) || [];
 
   useEffect(() => {
+    dispatch(getProduct());
+  }, [dispatch]);
+
+  useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-    dispatch(getProduct());
-  }, [dispatch, toast, error]);
+  }, [error, dispatch]);
 
   useEffect(() => {
     const interval = setInterval(() => {

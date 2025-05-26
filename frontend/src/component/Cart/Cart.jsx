@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
 import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
@@ -30,15 +29,6 @@ function Cart() {
   const checkoutHandler = () => {
     navigate("/login?redirect=/shipping");
   };
-
-  const [scroll, setScroll] = useState(false);
-  useEffect(() => {
-    const handleScroll = () => {
-      setScroll(window.scrollY > 90);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Calculate gross total
   const grossTotal = cartItems.reduce(

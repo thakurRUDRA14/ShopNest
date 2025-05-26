@@ -179,6 +179,8 @@ const adminSlice = createSlice({
         builder
             .addCase(getAllUsers.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(getAllUsers.fulfilled, (state, action) => {
                 state.loading = false;
@@ -191,6 +193,8 @@ const adminSlice = createSlice({
             })
             .addCase(getAnyUser.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(getAnyUser.fulfilled, (state, action) => {
                 state.loading = false;
@@ -203,6 +207,8 @@ const adminSlice = createSlice({
             })
             .addCase(deleteUser.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(deleteUser.fulfilled, (state, action) => {
                 state.loading = false;
@@ -215,6 +221,8 @@ const adminSlice = createSlice({
             })
             .addCase(updateUser.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(updateUser.fulfilled, (state, action) => {
                 state.loading = false;
@@ -227,6 +235,8 @@ const adminSlice = createSlice({
             })
             .addCase(getAdminProduct.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(getAdminProduct.fulfilled, (state, action) => {
                 state.loading = false;
@@ -238,6 +248,8 @@ const adminSlice = createSlice({
             })
             .addCase(createProduct.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(createProduct.fulfilled, (state, action) => {
                 state.loading = false;
@@ -251,6 +263,8 @@ const adminSlice = createSlice({
             })
             .addCase(updateProduct.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(updateProduct.fulfilled, (state, action) => {
                 state.loading = false;
@@ -264,6 +278,8 @@ const adminSlice = createSlice({
             })
             .addCase(deleteProduct.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(deleteProduct.fulfilled, (state, action) => {
                 state.loading = false;
@@ -276,6 +292,8 @@ const adminSlice = createSlice({
             })
             .addCase(getAllOrders.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(getAllOrders.fulfilled, (state, action) => {
                 state.loading = false;
@@ -289,6 +307,8 @@ const adminSlice = createSlice({
             })
             .addCase(updateOrder.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(updateOrder.fulfilled, (state, action) => {
                 state.loading = false;
@@ -301,6 +321,8 @@ const adminSlice = createSlice({
             })
             .addCase(deleteOrder.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(deleteOrder.fulfilled, (state, action) => {
                 state.loading = false;

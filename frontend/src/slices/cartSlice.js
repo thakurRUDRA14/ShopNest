@@ -84,6 +84,7 @@ const cartSlice = createSlice({
             .addCase(addToCart.pending, (state) => {
                 state.loading = true;
                 state.error = null;
+                state.message = "";
             })
             .addCase(addToCart.fulfilled, (state, action) => {
                 state.loading = false;
@@ -111,6 +112,7 @@ const cartSlice = createSlice({
             .addCase(changeInCart.pending, (state) => {
                 state.loading = true;
                 state.error = null;
+                state.message = "";
             })
             .addCase(changeInCart.fulfilled, (state, action) => {
                 state.loading = false;

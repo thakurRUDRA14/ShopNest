@@ -21,14 +21,15 @@ const OrderDetails = () => {
     if (!isAuthenticated) {
       navigate(`/login?redirect=/order/${id}`);
     }
+    dispatch(getOrderDetails(id));
+  }, [dispatch, id, isAuthenticated, navigate]);
 
+  useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-
-    dispatch(getOrderDetails(id));
-  }, [dispatch, error, id, isAuthenticated, navigate]);
+  }, [error, dispatch])
 
   const sectionVariants = {
     hidden: { opacity: 0, y: 20 },

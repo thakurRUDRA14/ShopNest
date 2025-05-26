@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@mui/material";
 import MetaData from "../../layout/MetaData";
@@ -33,17 +33,19 @@ const UpdateUser = () => {
       setRole(user?.role || "");
     }
 
-    if (error) {
-      toast.error(error);
-      dispatch(clearErrors());
-    }
-
     if (operationSuccess) {
       toast.success(message);
       navigate("/admin/users");
       dispatch(resetOperationStatus());
     }
-  }, [dispatch, error, operationSuccess, user, userId, navigate]);
+  }, [dispatch, operationSuccess, user, userId, navigate]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+  }, [error, dispatch])
 
   const updateUserSubmitHandler = (e) => {
     e.preventDefault();

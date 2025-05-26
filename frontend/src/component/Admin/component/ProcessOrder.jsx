@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MetaData from "../../layout/MetaData";
 import { Link, useParams } from "react-router-dom";
 import { Typography, Button, CircularProgress } from "@mui/material";
@@ -29,6 +29,14 @@ const ProcessOrder = () => {
   };
 
   useEffect(() => {
+    if (operationSuccess) {
+      toast.success(message);
+      dispatch(resetOperationStatus());
+    }
+    dispatch(getOrderDetails(orderId));
+  }, [dispatch, operationSuccess, orderId]);
+
+  useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
@@ -37,13 +45,7 @@ const ProcessOrder = () => {
       toast.error(updateError);
       dispatch(clearUpdateErrors());
     }
-    if (operationSuccess) {
-      toast.success(message);
-      dispatch(resetOperationStatus());
-    }
-
-    dispatch(getOrderDetails(orderId));
-  }, [dispatch, error, updateError, operationSuccess, orderId]);
+  }, [error, dispatch, updateError])
 
   return (
     <>

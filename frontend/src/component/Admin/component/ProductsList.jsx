@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
@@ -21,18 +21,19 @@ const ProductList = () => {
   );
 
   useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch(clearErrors());
-    }
-
     if (operationSuccess) {
       toast.success(message);
       dispatch(resetOperationStatus());
     }
-
     dispatch(getAdminProduct());
-  }, [dispatch, error, operationSuccess]);
+  }, [dispatch, operationSuccess]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+  }, [error, dispatch])
 
   const deleteProductHandler = (id) => {
     if (window.confirm("Are you sure you want to delete this product?")) {

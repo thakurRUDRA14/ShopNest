@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -27,19 +27,20 @@ const OrderList = () => {
   };
 
   useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch(clearErrors());
-    }
-
     if (operationSuccess) {
       toast.success(message);
       navigate("/admin/orders");
       dispatch(resetOperationStatus());
     }
-
     dispatch(getAllOrders());
-  }, [dispatch, error, operationSuccess]);
+  }, [dispatch, operationSuccess]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+  }, [error, dispatch])
 
   const columns = [
     {

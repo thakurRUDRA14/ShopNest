@@ -61,6 +61,8 @@ const productSlice = createSlice({
         builder
             .addCase(getProduct.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(getProduct.fulfilled, (state, action) => {
                 state.loading = false;
@@ -76,6 +78,8 @@ const productSlice = createSlice({
             })
             .addCase(getProductDetails.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(getProductDetails.fulfilled, (state, action) => {
                 state.loading = false;

@@ -25,14 +25,17 @@ const Register = () => {
     const { error, isAuthenticated, loading } = useSelector((state) => state.userData);
 
     useEffect(() => {
+        if (isAuthenticated && !loading) {
+            navigate(redirect);
+        }
+    }, [isAuthenticated, loading, navigate, redirect]);
+
+    useEffect(() => {
         if (error) {
             toast.error(error);
             dispatch(clearErrors());
         }
-        if (isAuthenticated && !loading) {
-            navigate(redirect);
-        }
-    }, [isAuthenticated, loading, error, navigate, redirect]);
+    }, [error, dispatch])
 
     const handleInputChange = (e) => {
         if (e.target.name === "avatar") {

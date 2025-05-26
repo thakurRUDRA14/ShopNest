@@ -70,17 +70,20 @@ const Payment = () => {
 
 
   useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch(clearErrors());
-    }
     if (!isAuthenticated) {
       navigate("/login?redirect=/payment");
     }
     if (!cartItems.length) {
       navigate("/cart");
     }
-  }, [dispatch, error, isAuthenticated, cartItems]);
+  }, [dispatch, isAuthenticated, cartItems]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearErrors());
+    }
+  }, [error, dispatch])
 
   const containerVariants = {
     visible: {

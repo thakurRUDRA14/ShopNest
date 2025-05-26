@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -39,14 +39,17 @@ const Dashboard = () => {
   const { products, users, orders, error } = useSelector((state) => state.adminData);
 
   useEffect(() => {
+    dispatch(getAdminProduct());
+    dispatch(getAllOrders());
+    dispatch(getAllUsers());
+  }, [dispatch, navigate]);
+
+  useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
     }
-    dispatch(getAdminProduct());
-    dispatch(getAllOrders());
-    dispatch(getAllUsers());
-  }, [dispatch, navigate, error]);
+  }, [error, dispatch])
 
   const outOfStock = products?.filter((item) => item.stock === 0).length || 0;
   const totalAmount = orders?.reduce((acc, item) => acc + item.totalPrice, 0) || 0;

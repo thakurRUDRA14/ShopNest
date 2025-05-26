@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import Button from "@mui/material/Button";
@@ -55,6 +55,15 @@ const UpdateProduct = () => {
       setOldImages(product.images);
       setImages(product.images)
     }
+
+    if (operationSuccess) {
+      toast.success(message);
+      navigate("/admin/product/all");
+      dispatch(resetOperationStatus());
+    }
+  }, [dispatch, operationSuccess, productId,]);
+
+  useEffect(() => {
     if (error) {
       toast.error(error);
       dispatch(clearErrors());
@@ -64,19 +73,7 @@ const UpdateProduct = () => {
       toast.error(updateError);
       dispatch(clearUpdateErrors());
     }
-
-    if (operationSuccess) {
-      toast.success(message);
-      navigate("/admin/product/all");
-      dispatch(resetOperationStatus());
-    }
-  }, [
-    dispatch,
-    error,
-    operationSuccess,
-    productId,
-    updateError,
-  ]);
+  }, [error, updateError, dispatch])
 
   const updateProductSubmitHandler = (e) => {
     e.preventDefault();

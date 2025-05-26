@@ -85,12 +85,15 @@ const Filters = ({ currentPage }) => {
     };
 
     useEffect(() => {
+        dispatch(getProduct({ keyword, currentPage, price, category, subCategory, ratings }));
+    }, [dispatch, keyword, currentPage, price, category, subCategory, ratings]);
+
+    useEffect(() => {
         if (error) {
             toast.error(error);
             dispatch(clearErrors());
         }
-        dispatch(getProduct({ keyword, currentPage, price, category, subCategory, ratings }));
-    }, [dispatch, keyword, currentPage, price, category, subCategory, ratings, error]);
+    }, [error, dispatch])
 
     return (
         <motion.div

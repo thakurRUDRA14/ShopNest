@@ -127,6 +127,8 @@ const userSlice = createSlice({
         builder
             .addCase(login.pending, (state) => {
                 state.loading = true;
+                state.message = "";
+                state.error = null;
             })
             .addCase(login.fulfilled, (state, action) => {
                 state.loading = false;
@@ -140,6 +142,8 @@ const userSlice = createSlice({
             })
             .addCase(register.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(register.fulfilled, (state, action) => {
                 state.loading = false;
@@ -153,6 +157,8 @@ const userSlice = createSlice({
             })
             .addCase(loadUser.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(loadUser.fulfilled, (state, action) => {
                 state.loading = false;
@@ -166,6 +172,8 @@ const userSlice = createSlice({
             })
             .addCase(logout.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(logout.fulfilled, (state, action) => {
                 state.loading = false;
@@ -179,6 +187,8 @@ const userSlice = createSlice({
             })
             .addCase(updateProfile.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(updateProfile.fulfilled, (state, action) => {
                 state.loading = false;
@@ -192,6 +202,8 @@ const userSlice = createSlice({
             })
             .addCase(updatePassword.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(updatePassword.fulfilled, (state, action) => {
                 state.loading = false;
@@ -205,6 +217,8 @@ const userSlice = createSlice({
             })
             .addCase(forgetPassword.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(forgetPassword.fulfilled, (state, action) => {
                 state.loading = false;
@@ -216,6 +230,8 @@ const userSlice = createSlice({
             })
             .addCase(resetPassword.pending, (state) => {
                 state.loading = true;
+                state.error = null;
+                state.message = "";
             })
             .addCase(resetPassword.fulfilled, (state, action) => {
                 state.loading = false;
