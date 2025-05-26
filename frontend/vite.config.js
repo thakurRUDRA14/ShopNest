@@ -1,16 +1,27 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:4000', // Your backend server
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '/api/v1'), // rewrite path if i dont want to use /v1/
+// Do not use import.meta.env in vite.config.js.
+// Always use loadEnv() to load environment variables in vite.config.js.
+
+export default defineConfig(({ mode }) => {
+
+  const env = loadEnv(mode, process.cwd());
+  const backendURL = env.VITE_BACKEND_URL;
+
+  return {
+    plugins: [react()],
+    server: {
+      proxy: {
+        '/api': {
+          target: backendURL,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '/api/v1'),
+          onError: (err) => {
+            console.error('Proxy error:', err);
+          },
+        },
       },
     },
-  },
-})
+  };
+});
