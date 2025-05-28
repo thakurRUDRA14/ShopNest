@@ -20,30 +20,22 @@ const uploadOnCloudinary = async (localFilePath, folder, next) => {
             crop: "scale",
             resource_type: "auto",
         });
-
-        // Remove the local file
-        try {
-            fs.unlinkSync(localFilePath);
-        } catch (error) {
-            console.error(500, "Error removing local file:", error);
-        }
-
         return response;
     } catch (error) {
         console.error("Error uploading to Cloudinary:", error);
         return next(new ApiError(500, "Failed to upload file to Cloudinary"));
+    } finally {
+        // Clean up local file after upload
+        if (fs.existsSync(localFilePath)) {
+            fs.unlinkSync(localFilePath);
+        }
     }
 };
 
 const deleteFromCloudinary = async (public_id, next) => {
-
-    console.log("I am in delete");
-
-
     if (!public_id || typeof public_id !== "string") {
         return next(new ApiError(400, "Invalid or missing public ID"));
     }
-
     try {
         await cloudinary.uploader.destroy(public_id);
     } catch (error) {
