@@ -123,7 +123,7 @@ const AuthForm = ({ type, formData, onInputChange, onSubmit, avatarPreview }) =>
                         {/* Password Field */}
 
                         {(type === 'updatePassword') &&
-                            <motion.div layout layoutId="password-field">
+                            <motion.div layout layoutId="update-password-field">
                                 <LabelledInput
                                     id='oldPassword'
                                     name="oldPassword"
@@ -187,9 +187,7 @@ const AuthForm = ({ type, formData, onInputChange, onSubmit, avatarPreview }) =>
                                     } />
                             </motion.div>}
 
-                        {/* Forgot Password (Login only) */}
-
-                        {(type === "login" || type === "updatePassword") && (
+                        {(type === "login" || type === "updatePassword" || type === "forgetPassword") && (
                             <motion.div
                                 layout
                                 layoutId="forgot-password-container"
@@ -199,10 +197,10 @@ const AuthForm = ({ type, formData, onInputChange, onSubmit, avatarPreview }) =>
                                 className="flex justify-end"
                             >
                                 <Link
-                                    to="/password/forget"
+                                    to={`/password/${type === "forgetPassword" ? "update" : "forget"}`}
                                     className="text-sm text-primary hover:text-primary-dark"
                                 >
-                                    Forgot password?
+                                    {type === "forgetPassword" ? "Update Password" : "Forgot password?"}
                                 </Link>
                             </motion.div>
                         )}

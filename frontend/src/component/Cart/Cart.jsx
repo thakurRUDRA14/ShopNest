@@ -27,7 +27,7 @@ function Cart() {
   };
 
   const checkoutHandler = () => {
-    navigate("/login?redirect=/shipping");
+    navigate("/login?redirect=/order/shipping");
   };
 
   // Calculate gross total

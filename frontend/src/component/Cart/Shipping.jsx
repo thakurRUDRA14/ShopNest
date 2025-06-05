@@ -44,12 +44,12 @@ const Shipping = () => {
       return;
     }
     dispatch(saveShippingInfo(formData));
-    navigate("/confirmOrder");
+    navigate("/order/confirm");
   };
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate("/login?redirect=/shipping");
+      navigate("/login?redirect=/order/shipping");
     }
     if (!cartItems.length) {
       navigate("/cart");

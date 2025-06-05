@@ -38,6 +38,7 @@ const UpdatePassword = () => {
     if (isUpdated) {
       toast("Password Updated Successfully");
       dispatch(resetUpdateStatus());
+      dispatch(clearErrors());
       navigate("/me");
     }
   }, [dispatch, navigate, isUpdated, isAuthenticated]);

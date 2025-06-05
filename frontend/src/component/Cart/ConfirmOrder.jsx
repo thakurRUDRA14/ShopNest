@@ -28,12 +28,12 @@ const ConfirmOrder = () => {
     };
 
     sessionStorage.setItem("orderInfo", JSON.stringify(data));
-    navigate("/payment");
+    navigate("/order/payment");
   };
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate("/login?redirect=/confirmOrder");
+      navigate("/login?redirect=/order/confirm");
     }
     if (!cartItems.length) {
       navigate("/cart");

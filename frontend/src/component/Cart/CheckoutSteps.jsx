@@ -6,11 +6,11 @@ const CheckoutSteps = () => {
   const location = useLocation();
 
   let activeStep;
-  if (location.pathname.includes("shipping")) {
+  if (location.pathname.includes("order/shipping")) {
     activeStep = 0;
-  } else if (location.pathname.includes("confirmOrder")) {
+  } else if (location.pathname.includes("order/confirm")) {
     activeStep = 1;
-  } else if (location.pathname.includes("payment")) {
+  } else if (location.pathname.includes("order/payment")) {
     activeStep = 2;
   } else {
     activeStep = 0;
@@ -62,7 +62,7 @@ const CheckoutSteps = () => {
               className="flex flex-col items-center"
             >
               <Link
-                to={item.label === "Shipping Details" ? "/shipping" : item.label === "Confirm Order" ? "/confirmOrder" : item.label === "Payment" ? "/payment" : "/"}
+                to={item.label === "Shipping Details" ? "/order/shipping" : item.label === "Confirm Order" ? "/order/confirm" : item.label === "Payment" ? "/order/payment" : "/"}
                 className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 ${activeStep >= index
                   ? "bg-primary text-white shadow-lg"
                   : "bg-gray-200 text-gray-500"

@@ -56,11 +56,12 @@ const Payment = () => {
   };
 
 
-  const handlePaymentSubmit = (e) => {
+  const handlePaymentSubmit = async (e) => {
     e.preventDefault();
     try {
       // Payment processing logic would go here
-      dispatch(createOrder(order));
+      await dispatch(createOrder(order));
+      navigate("/order/success");
       dispatch(emptyCart());
       toast.success("Order placed successfully!");
     } catch (error) {
@@ -71,7 +72,7 @@ const Payment = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate("/login?redirect=/payment");
+      navigate("/login?redirect=/order/payment");
     }
     if (!cartItems.length) {
       navigate("/cart");

@@ -56,12 +56,12 @@ const router = createBrowserRouter(
         <Route path='password/forget' element={<ForgetPassword />} />
         <Route path='password/reset/:token' element={<ResetPassword />} />
         <Route path='cart' element={<Cart />} />
-        <Route element={<CheckoutLayout />}>
+        <Route path='order' element={<CheckoutLayout />}>
           <Route path='shipping' element={<Shipping />} />
-          <Route path='confirmOrder' element={<ConfirmOrder />} />
+          <Route path='confirm' element={<ConfirmOrder />} />
           <Route path='payment' element={<Payment />} />
         </Route>
-        <Route path='success' element={<OrderSuccess />} />
+        <Route path='orderSuccess' element={<OrderSuccess />} />
         <Route path='orders' element={<MyOrders />} />
         <Route path='order/:id' element={<OrderDetails />} />
         <Route path='admin' element={<AdminLayout />}>

@@ -64,6 +64,7 @@ const UpdateProfile = () => {
     if (isUpdated) {
       toast("Profile Updated Successfully");
       dispatch(resetUpdateStatus());
+      dispatch(clearErrors());
       dispatch(loadUser())
       navigate("/me");
     }
