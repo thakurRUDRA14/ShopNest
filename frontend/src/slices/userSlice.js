@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 
 export const login = createAsyncThunk(
     "user/login",
     async (userLoginForm, { rejectWithValue }) => {
         try {
             const config = { headers: { "Content-Type": "application/json" } };
-            const Response = await axios.post(`/api/user/login`, userLoginForm, config);
+            const Response = await axiosInstance.post(`/user/login`, userLoginForm, config);
             return Response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
@@ -19,7 +19,7 @@ export const register = createAsyncThunk(
     async (userRegisterForm, { rejectWithValue }) => {
         try {
             const config = { headers: { "Content-Type": "multipart/form-data" } };
-            const response = await axios.post(`/api/user/register`, userRegisterForm, config);
+            const response = await axiosInstance.post(`/user/register`, userRegisterForm, config);
             return response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
@@ -31,7 +31,7 @@ export const loadUser = createAsyncThunk(
     "user/loadUser",
     async (_, { rejectWithValue }) => {
         try {
-            const Response = await axios.get("/api/user/me");
+            const Response = await axiosInstance.get("/user/me");
             return Response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
@@ -43,7 +43,7 @@ export const logout = createAsyncThunk(
     "user/logout",
     async (_, { rejectWithValue }) => {
         try {
-            const Response = await axios.get("/api/user/logout");
+            const Response = await axiosInstance.get("/user/logout");
             return Response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
@@ -56,7 +56,7 @@ export const updateProfile = createAsyncThunk(
     async (updateProfileForm, { rejectWithValue }) => {
         try {
             const config = { headers: { "Content-Type": "multipart/form-data" } };
-            const Response = await axios.put(`/api/user/me/update`, updateProfileForm, config);
+            const Response = await axiosInstance.put(`/user/me/update`, updateProfileForm, config);
             return Response.data;
         } catch (error) {
             rejectWithValue(error.response.data.message)
@@ -68,7 +68,7 @@ export const updatePassword = createAsyncThunk(
     async (updatePasswordForm, { rejectWithValue }) => {
         try {
             const config = { headers: { "Content-Type": "application/json" } };
-            const Response = await axios.put(`/api/user/password/update`, updatePasswordForm, config);
+            const Response = await axiosInstance.put(`/user/password/update`, updatePasswordForm, config);
             return Response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
@@ -81,7 +81,7 @@ export const forgetPassword = createAsyncThunk(
     async (forgetPasswordForm, { rejectWithValue }) => {
         try {
             const config = { headers: { "Content-Type": "application/json" } };
-            const Response = await axios.post(`/api/user/password/forget`, forgetPasswordForm, config);
+            const Response = await axiosInstance.post(`/user/password/forget`, forgetPasswordForm, config);
             return Response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
@@ -94,7 +94,7 @@ export const resetPassword = createAsyncThunk(
     async ({ token, resetPasswordForm }, { rejectWithValue }) => {
         try {
             const config = { headers: { "Content-Type": "application/json" } };
-            const Response = await axios.put(`/api/user/password/reset/${token}`, resetPasswordForm, config);
+            const Response = await axiosInstance.put(`/user/password/reset/${token}`, resetPasswordForm, config);
             return Response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";

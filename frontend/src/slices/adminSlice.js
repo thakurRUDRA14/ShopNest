@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 
 // Get All Users
 export const getAllUsers = createAsyncThunk(
     "user/admin/getAllUsers",
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`/api/admin/users`);
+            const response = await axiosInstance.get(`/admin/users`);
             return response.data;
         } catch (error) {
             rejectWithValue(error.response.data.message);
@@ -18,7 +18,7 @@ export const getAnyUser = createAsyncThunk(
     "user/admin/getAnyUser",
     async (userId, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`/api/admin/user/${userId}`);
+            const response = await axiosInstance.get(`/admin/user/${userId}`);
             return response.data;
         } catch (error) {
             rejectWithValue(error.response.data.message);
@@ -30,7 +30,7 @@ export const deleteUser = createAsyncThunk(
     'products/admin/deleteUser',
     async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.delete(`/api/admin/user/${id}`);
+            const response = await axiosInstance.delete(`/admin/user/${id}`);
             return response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
@@ -46,7 +46,7 @@ export const updateUser = createAsyncThunk(
             const config = {
                 headers: { 'Content-Type': 'application/json' },
             };
-            const response = await axios.put(`/api/admin/user/${userId}`, updateUserForm, config);
+            const response = await axiosInstance.put(`/admin/user/${userId}`, updateUserForm, config);
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data.message);
@@ -59,7 +59,7 @@ export const getAdminProduct = createAsyncThunk(
     'products/admin/getAdminProduct',
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.get('/api/admin/product/all');
+            const response = await axiosInstance.get('/admin/product/all');
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data.message);
@@ -72,7 +72,7 @@ export const createProduct = createAsyncThunk(
     async (newProductForm, { rejectWithValue }) => {
         try {
             const config = { headers: { "Content-Type": "multipart/form-data" } };
-            const response = await axios.post('/api/admin/product/new', newProductForm, config);
+            const response = await axiosInstance.post('/admin/product/new', newProductForm, config);
             return response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
@@ -88,7 +88,7 @@ export const updateProduct = createAsyncThunk(
             const config = {
                 headers: { 'Content-Type': 'multipart/form-data' },
             };
-            const response = await axios.put(`/api/admin/product/${productId}`, updateProductForm, config);
+            const response = await axiosInstance.put(`/admin/product/${productId}`, updateProductForm, config);
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data.message);
@@ -100,7 +100,7 @@ export const deleteProduct = createAsyncThunk(
     'products/admin/deleteProduct',
     async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.delete(`/api/admin/product/${id}`);
+            const response = await axiosInstance.delete(`/admin/product/${id}`);
             return response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
@@ -114,7 +114,7 @@ export const getAllOrders = createAsyncThunk(
     "orders/admin/getAllOrders",
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.get('/api/admin/orders/all');
+            const response = await axiosInstance.get('/admin/orders/all');
             return response.data;
         } catch (error) {
             rejectWithValue(error.response.data.message);
@@ -129,7 +129,7 @@ export const updateOrder = createAsyncThunk(
             const config = {
                 headers: { 'Content-Type': 'application/json' },
             };
-            const response = await axios.put(`/api/admin/order/${orderId}`, updateOrderForm, config);
+            const response = await axiosInstance.put(`/admin/order/${orderId}`, updateOrderForm, config);
             return response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
@@ -142,7 +142,7 @@ export const deleteOrder = createAsyncThunk(
     'products/admin/deleteOrder',
     async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.delete(`/api/admin/order/${id}`);
+            const response = await axiosInstance.delete(`/admin/order/${id}`);
             return response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 
 export const newReview = createAsyncThunk(
     'reviews/newReview',
@@ -8,7 +8,7 @@ export const newReview = createAsyncThunk(
             const config = {
                 headers: { 'Content-Type': 'application/json' },
             };
-            const response = await axios.put('/api/review/new', reviewForm, config);
+            const response = await axiosInstance.put('/review/new', reviewForm, config);
             return response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
@@ -22,7 +22,7 @@ export const getAllReviews = createAsyncThunk(
     'reviews/getAllReviews',
     async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`/api/review/all?_id=${id}`);
+            const response = await axiosInstance.get(`/review/all?_id=${id}`);
             return response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
@@ -36,7 +36,7 @@ export const deleteReviews = createAsyncThunk(
     'reviews/deleteReviews',
     async ({ reviewId, productId }, { rejectWithValue }) => {
         try {
-            const response = await axios.delete(`/api/review/delete?reviewId=${reviewId}&productId=${productId}`);
+            const response = await axiosInstance.delete(`/review/delete?reviewId=${reviewId}&productId=${productId}`);
             return response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";

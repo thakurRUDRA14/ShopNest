@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
 
 // Get All Products
 export const getProduct = createAsyncThunk(
@@ -7,7 +7,7 @@ export const getProduct = createAsyncThunk(
     async ({ keyword = '', currentPage = 1, price = [0, 25000], category = null, subCategory = null, ratings = 0 } = {}, { rejectWithValue }) => {
         try {
 
-            let link = `/api/product/all?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+            let link = `/product/all?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
 
             if (category) {
                 link += `&category=${encodeURIComponent(category)}`;
@@ -17,7 +17,7 @@ export const getProduct = createAsyncThunk(
             }
 
             // API request
-            const response = await axios.get(link);
+            const response = await axiosInstance.get(link);
             return response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";
@@ -31,7 +31,7 @@ export const getProductDetails = createAsyncThunk(
     'products/getProductDetails',
     async (id, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`/api/product/${id}`);
+            const response = await axiosInstance.get(`/product/${id}`);
             return response.data;
         } catch (error) {
             const errorMessage = error.response?.data?.message || "An unexpected error occurred.";

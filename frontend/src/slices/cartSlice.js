@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 
 // Thunk to Fetch Product and Add to Cart
 export const addToCart = createAsyncThunk(
     "cart/addToCart",
     async ({ productId, quantity }, { rejectWithValue }) => {
         try {
-            const { data } = await axios.get(`/api/product/${productId}`);
+            const { data } = await axiosInstance.get(`/product/${productId}`);
             const item = {
                 productId: data.data._id,
                 name: data.data.name,
@@ -29,7 +29,7 @@ export const changeInCart = createAsyncThunk(
     "cart/changeInCart",
     async ({ productId, quantity }, { rejectWithValue }) => {
         try {
-            const { data } = await axios.get(`/api/product/${productId}`);
+            const { data } = await axiosInstance.get(`/product/${productId}`);
             const item = {
                 productId: data.data._id,
                 name: data.data.name,

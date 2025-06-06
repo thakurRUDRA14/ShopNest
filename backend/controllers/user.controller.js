@@ -95,7 +95,8 @@ const forgetPassword = asyncHandler(async (req, res, next) => {
     const resetToken = user.getResetPasswordToken();
     await user.save({ validateBeforeSave: false });
 
-    const resetPasswordURL = `${req.protocol}://${req.get("host")}/api/v1/user/password/reset/${resetToken}`;
+    const frontendBaseURL = process.env.FRONTEND_BASE_URL || 'http://localhost:5173';
+    const resetPasswordURL = `${frontendBaseURL}/password/reset/${resetToken}`;
 
     const message = `
     <html>
