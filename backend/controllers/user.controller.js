@@ -69,7 +69,7 @@ const loginUser = asyncHandler(async (req, res, next) => {
 
 //logout user
 const logoutUser = asyncHandler(async (req, res, next) => {
-    res.cookie("userToken", null, {
+    res.cookie("token", null, {
         expires: new Date(Date.now()),
         httpOnly: true,
         secure: true

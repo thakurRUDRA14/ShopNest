@@ -167,7 +167,6 @@ const userSlice = createSlice({
             })
             .addCase(loadUser.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload;
             })
             .addCase(logout.pending, (state) => {
                 state.loading = true;

@@ -4,13 +4,13 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { User } from "../models/user.model.js";
 
 const verifyJWT = asyncHandler(async (req, res, next) => {
-    const { userToken } = req.cookies;
+    const { token } = req.cookies;
 
-    if (!userToken) {
+    if (!token) {
         return next(new ApiError(401, "Please login to access this resource"))
     }
 
-    const decodedData = jwt.verify(userToken, process.env.JWT_SECRET);
+    const decodedData = jwt.verify(token, process.env.JWT_SECRET);
     if (!decodedData || !decodedData._id) {
         return next(new ApiError(401, "Invalid token"));
     }

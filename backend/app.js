@@ -3,13 +3,13 @@ import cookieParser from "cookie-parser"
 import bodyParser from "body-parser"
 import mongoose from "mongoose";
 import { v2 as cloudinary } from "cloudinary";
-import customCORS from "./middlewares/cors.middleware.js"
+import { useCors } from "./middlewares/cors.middleware.js"
 import { authorizedRoles, verifyJWT } from "./middlewares/auth.middleware.js"
 import errorHandler from "./middlewares/errorHandler.middleware.js"
 
 const app = express()
 
-app.use(customCORS);
+app.use(useCors);
 
 // preparing server for receiving data from different source
 app.use(express.json({ limit: "16kb" }))      // data recieving from form.

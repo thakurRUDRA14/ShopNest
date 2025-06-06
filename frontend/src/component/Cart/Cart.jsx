@@ -96,7 +96,7 @@ function Cart() {
           >
             <motion.div
               variants={headerVariants}
-              className={`flex justify-between items-center bg-primary text-white p-4 md:p-6 mb-8 rounded-lg shadow-md sticky top-16 z-50 }`}
+              className={`flex justify-between items-center bg-primary text-white p-4 md:p-6 mb-8 rounded-lg shadow-md sticky top-16 z-10`}
             >
               <h2 className="text-lg md:text-xl font-medium">Your Shopping Cart</h2>
               <p className="text-sm md:text-base">
