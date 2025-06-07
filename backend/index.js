@@ -84,7 +84,7 @@ const connectDBWithRetry = async () => {
         const server = app.listen(process.env.PORT || 8000, () => {
             const address = server.address();
             const host = process.env.NODE_ENV === 'production'
-                ? 'https://shopnest-gw81.onrender.com'
+                ? 'shopnest-gw81.onrender.com'
                 : 'localhost';
             const port = address.port;
 
