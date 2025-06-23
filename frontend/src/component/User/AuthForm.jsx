@@ -187,7 +187,7 @@ const AuthForm = ({ type, formData, onInputChange, onSubmit, avatarPreview }) =>
                                     } />
                             </motion.div>}
 
-                        {(type === "login" || type === "updatePassword" || type === "forgetPassword") && (
+                        {(type === "login" || type === "updatePassword") && (
                             <motion.div
                                 layout
                                 layoutId="forgot-password-container"
@@ -200,7 +200,7 @@ const AuthForm = ({ type, formData, onInputChange, onSubmit, avatarPreview }) =>
                                     to={`/password/${type === "forgetPassword" ? "update" : "forget"}`}
                                     className="text-sm text-primary hover:text-primary-dark"
                                 >
-                                    {type === "forgetPassword" ? "Update Password" : "Forgot password?"}
+                                    Forgot password?
                                 </Link>
                             </motion.div>
                         )}
