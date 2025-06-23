@@ -4,6 +4,7 @@ import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import { Link, useNavigate } from "react-router-dom";
 import CartItemCard from "./CartItemCard.jsx";
 import { changeInCart, removeFromCart } from "../../slices/cartSlice.js";
+import MetaData from "../layout/MetaData.jsx";
 
 function Cart() {
   const dispatch = useDispatch();
@@ -58,7 +59,8 @@ function Cart() {
     show: { opacity: 1, y: 0 },
   };
 
-  return (
+  return (<>
+    <MetaData title="Cart -- ShopNest" />
     <div className="container min-h-screen bg-gray-50 pb-20">
       <AnimatePresence>
         {cartItems.length === 0 ? (
@@ -197,7 +199,7 @@ function Cart() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </div></>
   );
 }
 

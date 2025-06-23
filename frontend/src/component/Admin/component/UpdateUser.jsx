@@ -60,7 +60,7 @@ const UpdateUser = () => {
 
   return (
     <>
-      <MetaData title="Update User" />
+      <MetaData title="Update User - Admin -- ShopNest" />
       <div className="flex flex-col items-center bg-gray-100 w-full min-h-screen border-l border-gray-300 p-8">
 
         <form

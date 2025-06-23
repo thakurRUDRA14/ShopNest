@@ -69,7 +69,7 @@ const Profile = () => {
 
   return (
     <>
-      <MetaData title={`${user?.name || "User"}'s Profile`} />
+      <MetaData title={`${user?.name || "User"}'s Profile -- ShopNest`} />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -87,7 +87,7 @@ const Profile = () => {
               <motion.div layout className="flex justify-between mb-8">
                 <h3 className="w-full text-base sm:text-xl md:text-2xl font-bold text-gray-800">{activeTab === "profile" ? "Profile Overview" : "Account Settings"}</h3>
                 <div className="w-full flex justify-end gap-1">
-                  {activeTab === "profile" ?
+                  {/* {activeTab === "profile" ?
                     <button
                       onClick={() => setActiveTab("settings")}
                       className={`p-1 sm:p-3 rounded-full hover:shadow-lg transition-all ${activeTab === "settings" ? 'bg-white text-primary shadow-md' : 'hover:bg-indigo-500 hover:text-white'}`}
@@ -100,7 +100,7 @@ const Profile = () => {
                     >
                       <FiUser />
                     </button>
-                  }
+                  } */}
                   <Link
                     to="/me/update"
                     className="p-1 sm:p-3 rounded-full hover:shadow-lg hover:text-white hover:bg-primary transition-all"
@@ -258,7 +258,7 @@ const Profile = () => {
                         </Link>
                       </motion.div>
 
-                      <motion.div
+                      {/* <motion.div
                         whileHover={{ y: -5 }}
                         className="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all"
                       >
@@ -283,9 +283,9 @@ const Profile = () => {
                         >
                           View Wishlist
                         </Link>
-                      </motion.div>
+                      </motion.div> */}
 
-                      <motion.div
+                      {/* <motion.div
                         whileHover={{ y: -5 }}
                         className="bg-white p-6 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition-all"
                       >
@@ -310,7 +310,7 @@ const Profile = () => {
                         >
                           Manage Payments
                         </Link>
-                      </motion.div>
+                      </motion.div> */}
                     </div>
                   </div>
                 </motion.div>

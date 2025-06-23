@@ -53,7 +53,7 @@ const UpdatePassword = () => {
   return (
     <>
       <>
-        <MetaData title="Update Password" />
+        <MetaData title="Update Password -- ShopNest" />
         <div className="w-full max-w-md mx-auto h-screen flex items-center justify-center p-4">
           <AuthForm
             type="updatePassword"

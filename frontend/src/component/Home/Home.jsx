@@ -13,7 +13,7 @@ import StarRating from "../Product/StarRating.jsx";
 
 const sale = {
   image: "https://res.cloudinary.com/rudra-backend/image/upload/v1734907188/ShopNest/assets/Cover.jpg",
-  heading: "Summer Collection 2023",
+  heading: "Summer Collection 2025",
   description: "Discover our new arrivals with up to 50% off selected items ",
   link: "/products",
 }
@@ -96,15 +96,36 @@ function Home() {
   const [currentOfferIndex, setCurrentOfferIndex] = useState(0);
   const [currentSlide, setCurrentSlide] = useState(0);
   const currentOffer = offers[currentOfferIndex];
+  const [resultsPerPage, setResultsPerPage] = useState(() =>
+    window.innerWidth > 1530 ? 10 : 8
+  );
+
+  const featuredProducts = products?.slice(0, resultsPerPage) || [];
+  const trendingProducts = products?.slice(0, 10) || [];
+  const newArrivals = products?.slice(0, 10) || [];
 
 
-  const featuredProducts = products?.slice(0, 8) || [];
-  const trendingProducts = products?.slice(0, 8) || [];
-  const newArrivals = products?.slice(0, 8) || [];
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 1536 || window.innerWidth < 640) {
+        setResultsPerPage(10);
+      } else if (window.innerWidth < 1530 && window.innerWidth >= 1024) {
+        setResultsPerPage(8);
+      } else {
+        setResultsPerPage(10);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Set initial value just in case
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, [window.innerWidth, dispatch]);
 
   useEffect(() => {
     dispatch(getProduct());
-  }, [dispatch]);
+  }, [])
 
   useEffect(() => {
     if (error) {
@@ -197,10 +218,17 @@ function Home() {
         </section>
 
         {/* Featured Products */}
-        <section className="py-12">
-          <div className="container mx-auto px-4">
-            <div className="flex justify-between items-center mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold">Featured Products</h2>
+        <section className="py-8 sm:py-12 lg:py-16">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 lg:mb-10">
+              <div className="mb-4 sm:mb-0">
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-1">
+                  Featured Products
+                </h2>
+                <p className="text-sm sm:text-base text-gray-600">
+                  Discover our handpicked selection of premium products
+                </p>
+              </div>
               <Link
                 to="/products"
                 className="text-indigo-600 hover:text-indigo-800 font-medium flex items-center"
@@ -208,14 +236,53 @@ function Home() {
                 View All <FiChevronRight className="ml-1" />
               </Link>
             </div>
-            <div className="hidden lg:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-x-10 lg:gap-5 xl:gap-6">
+
+            {/* Desktop/Tablet Grid */}
+            <div className="hidden md:grid grid-cols-1 lg:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-5 lg:gap-6 xl:gap-7">
               {featuredProducts.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
             </div>
-            <div className="lg:hidden">
-              <ProductCarousel products={featuredProducts}></ProductCarousel>
+
+            {/* Mobile Carousel */}
+            <div className="block md:hidden">
+              <ProductCarousel products={featuredProducts} />
             </div>
+
+            {/* Empty State */}
+            {(!featuredProducts || featuredProducts.length === 0) && (
+              <div className="text-center py-12 sm:py-16">
+                <div className="max-w-md mx-auto">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                    <svg
+                      className="w-8 h-8 text-gray-400"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">
+                    No Featured Products
+                  </h3>
+                  <p className="text-gray-500 mb-6">
+                    We're currently updating our featured products. Please check back soon!
+                  </p>
+                  <Link
+                    to="/products"
+                    className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                  >
+                    Browse All Products
+                  </Link>
+                </div>
+              </div>
+            )}
           </div>
         </section>
 

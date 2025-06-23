@@ -13,10 +13,10 @@ const MyOrders = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const { loading, error, orders, ordersCount, resultPerPage } = useSelector((state) => state.orderData);
+  const { loading, error, orders, ordersCount, resultsPerPage } = useSelector((state) => state.orderData);
   const { isAuthenticated, user } = useSelector((state) => state.userData);
 
-  const totalPages = Math.ceil(ordersCount / resultPerPage);
+  const totalPages = Math.ceil(ordersCount / resultsPerPage);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -53,7 +53,7 @@ const MyOrders = () => {
     <>
       {isAuthenticated && (
         <>
-          <MetaData title={`${user.name}'s - Orders`} />
+          <MetaData title={`${user.name}'s - Orders -- ShopNest`} />
           <div className="min-h-screen w-full flex justify-center bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: -20 }}

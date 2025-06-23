@@ -127,7 +127,7 @@ const UsersList = () => {
 
   return (
     <>
-      <MetaData title="ALL USERS - Admin" />
+      <MetaData title="All Users - Admin -- ShopNest" />
       <div className="flex flex-col items-center p-5 bg-gray-50 min-h-screen">
         <Typography
           variant="h4"

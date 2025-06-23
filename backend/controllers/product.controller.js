@@ -46,16 +46,16 @@ const createProduct = asyncHandler(async (req, res, next) => {
 //Get all products
 const getAllProducts = asyncHandler(async (req, res) => {
 
-    const resultPerPage = 8;
+    const resultsPerPage = req.query.resultsPerPage ? Number(req.query.resultsPerPage) : 12;
     const productCount = await Product.countDocuments();
     let apiFeature = new ApiFeatures(Product.find(), req.query).search().filter()
     let products = await apiFeature.query;
     const filteredProductsCount = products.length;
-    apiFeature = new ApiFeatures(Product.find(), req.query).search().filter().pagination(resultPerPage)
+    apiFeature = new ApiFeatures(Product.find(), req.query).search().filter().sort().pagination()
     products = await apiFeature.query;
     res
         .status(200)
-        .json(new ApiResponse(200, { products, productCount, filteredProductsCount, resultPerPage }, "All product fetched successfully"))
+        .json(new ApiResponse(200, { products, productCount, filteredProductsCount, resultsPerPage }, "All product fetched successfully"))
 })
 
 // Get product details
@@ -72,7 +72,7 @@ const getProductDetails = asyncHandler(async (req, res, next) => {
 
 // Get all product -- Admin
 const getAdminProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find();
+    const products = await Product.find().sort();
     res
         .status(200)
         .json(new ApiResponse(200, products, "All product fetched successfully"))

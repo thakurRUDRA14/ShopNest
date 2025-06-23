@@ -53,7 +53,7 @@ const ResetPassword = () => {
         <Loader />
       ) : (
         <>
-          <MetaData title="Reset Password" />
+          <MetaData title="Reset Password -- ShopNest" />
           <div className="w-full max-w-md mx-auto h-screen flex items-center justify-center p-4">
             <AuthForm
               type="resetPassword"

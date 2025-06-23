@@ -65,8 +65,7 @@ const ConfirmOrder = () => {
   return (
     isAuthenticated && (
       <>
-        <MetaData title="Confirm Order -- SHOPNEST" />
-
+        <MetaData title="Confirm Order -- ShopNest" />
         <motion.div
           layoutId="checkout-container"
           variants={containerVariants}

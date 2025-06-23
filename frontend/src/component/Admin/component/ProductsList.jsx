@@ -105,7 +105,7 @@ const ProductList = () => {
 
   return (
     <>
-      <MetaData title="All Products - Admin" />
+      <MetaData title="All Products - Admin -- ShopNest" />
       <div className="flex flex-col items-center p-5 bg-gray-50 min-h-screen">
         <Typography
           variant="h4"

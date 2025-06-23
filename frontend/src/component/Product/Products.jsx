@@ -16,16 +16,16 @@ const Products = () => {
   const {
     products,
     loading,
-    resultPerPage,
+    resultsPerPage,
     filteredProductsCount,
   } = useSelector((state) => state.productsData);
 
-  const totalPages = Math.ceil(filteredProductsCount / resultPerPage);
+  const totalPages = Math.ceil(filteredProductsCount / resultsPerPage);
   if (loading && !products) return <Loader />;
 
   return (
     <>
-      <MetaData title="PRODUCTS -- SHOPNEST" />
+      <MetaData title="Products -- ShopNest" />
       <div className="container mx-auto p-4 sm:py-8">
         <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
           {keyword ? `Search Results for "${keyword}"` : "All Products"}
@@ -34,9 +34,9 @@ const Products = () => {
           </span>
         </h2>
 
-        <div className="flex flex-col md:flex-row gap-2 md:gap-8">
+        <div className="flex flex-col lg:flex-row gap-2 md:gap-8">
           {/* Filters Sidebar - Mobile */}
-          <div className="flex justify-end md:hidden sticky top-32 z-10">
+          <div className="flex justify-end lg:hidden sticky top-32 z-10">
             <motion.button
               onClick={() => setShowFilters(!showFilters)}
               className="flex items-center justify-center w-10 h-10 bg-blue-600 text-white rounded-full shadow-md hover:bg-blue-700 transition-colors z-10 relative"
@@ -96,17 +96,16 @@ const Products = () => {
           </div>
 
           {/* Filters Sidebar - Desktop */}
-          <div className="hidden md:block w-72 flex-shrink-0">
+          <div className="hidden lg:block lg:w-64 xl:w-72 flex-shrink-0">
             <div className="sticky top-24 h-[calc(100vh-6rem)] overflow-y-auto pb-6">
               <Filters currentPage={currentPage} />
             </div>
           </div>
-
           {/* Products Grid */}
           <div className="flex-1">
             {products && products.length > 0 ? (
               <>
-                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4 xl:gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-4 xl:gap-6">
                   {products.map((product) => (
                     <motion.div
                       key={product._id}

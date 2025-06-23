@@ -39,7 +39,7 @@ const ForgetPassword = () => {
 
   return (
     <>
-      <MetaData title="Forget Password" />
+      <MetaData title="Forget Password -- ShopNest" />
       <div className="w-full max-w-md mx-auto h-screen flex items-center justify-center p-4">
         <AuthForm
           type="forgetPassword"

@@ -24,7 +24,7 @@ const wallets = [
 const Payment = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [paymentMethod, setPaymentMethod] = useState('card');
+  const [paymentMethod, setPaymentMethod] = useState('cod');
   const [cardDetails, setCardDetails] = useState({
     number: '',
     name: '',
@@ -109,7 +109,7 @@ const Payment = () => {
   return (
     isAuthenticated &&
     <>
-      <MetaData title="Payment -- SHOPNEST" />
+      <MetaData title="Payment -- ShopNest" />
       <motion.div
         layoutId="checkout-container"
         variants={containerVariants}
@@ -302,7 +302,7 @@ const Payment = () => {
                     Pay in cash when your order is delivered. An additional ₹50 charge may apply.
                   </p>
                   <div className="pt-2">
-                    <button className="w-full bg-gray-800 text-white py-2 rounded-lg font-medium hover:bg-gray-900 transition-colors">
+                    <button onClick={(e) => handlePaymentSubmit(e)} className="w-full bg-gray-800 text-white py-2 rounded-lg font-medium hover:bg-gray-900 transition-colors">
                       Place COD Order
                     </button>
                   </div>

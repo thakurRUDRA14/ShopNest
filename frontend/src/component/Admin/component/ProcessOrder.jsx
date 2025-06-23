@@ -49,7 +49,7 @@ const ProcessOrder = () => {
 
   return (
     <>
-      <MetaData title="Process Order" />
+      <MetaData title="Process Order - Admin -- ShopNest" />
       <div className="grid gap-8 lg:grid-cols-2 p-6 md:p-8">
 
         {/* Shipping Info */}

@@ -231,7 +231,7 @@ const ProductDetails = () => {
             </motion.div>
 
 
-            <motion.button
+            {/* <motion.button
               className={`${product.stock < 1
                 ? "bg-gray-500 cursor-not-allowed"
                 : "bg-primary hover:bg-blue-700"
@@ -242,7 +242,7 @@ const ProductDetails = () => {
               whileTap={product.stock < 1 ? {} : { scale: 0.95 }}
             >
               Buy Now
-            </motion.button>
+            </motion.button> */}
           </motion.div>
         </motion.div>
 

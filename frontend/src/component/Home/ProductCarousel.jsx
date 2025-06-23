@@ -4,42 +4,51 @@ import { useRef, useState, useEffect } from 'react';
 import ProductCard from '../Product/ProductCard';
 
 const ProductCarousel = ({ products }) => {
-    const [position, setPosition] = useState(0);
     const carouselRef = useRef();
+    const cardsWrapperRef = useRef();
+    const cardRef = useRef();
+    const [position, setPosition] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
     const [startX, setStartX] = useState(0);
     const [scrollLeft, setScrollLeft] = useState(0);
-
-    // Responsive item count
+    const [itemWidth, setItemWidth] = useState(300);
+    const [gap, setGap] = useState(20);
     const [visibleItems, setVisibleItems] = useState(() => {
         if (typeof window !== 'undefined') {
-            return window.innerWidth < 640 ? 1 : window.innerWidth < 1024 ? 2 : 4;
+            return window.innerWidth < 640 ? 1 : window.innerWidth < 1024 ? 2 : 5;
         }
         return 2;
     });
-
-    const itemWidth = 300; // Width of each product card
-    const gap = 20; // Gap between items
-    const totalWidth = (itemWidth + gap) * products.length - gap;
-
     // Motion values for smooth dragging
     const x = useMotionValue(0);
 
-    // Handle window resize
     useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth < 640) {
-                setVisibleItems(1);
-            } else if (window.innerWidth < 1024) {
-                setVisibleItems(2);
-            } else {
-                setVisibleItems(4);
-            }
-        };
+        function updateMeasurements() {
+            if (cardRef.current && carouselRef.current && cardsWrapperRef.current) {
+                const cardWidth = cardRef.current.offsetWidth;
 
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+                // Get computed gap from CSS
+                const styles = window.getComputedStyle(cardsWrapperRef.current);
+                const gapStr = styles.getPropertyValue('gap') || styles.getPropertyValue('column-gap') || '20px';
+                const gapPx = parseInt(gapStr);
+
+                const containerWidth = carouselRef.current.offsetWidth;
+                const count = Math.floor(containerWidth / (cardWidth + gapPx));
+
+                setItemWidth(cardWidth);
+                setGap(gapPx);
+
+                setVisibleItems(count > 0 ? count : 1);
+            }
+        }
+
+        updateMeasurements();
+
+        window.addEventListener('resize', updateMeasurements);
+        return () => window.removeEventListener('resize', updateMeasurements);
     }, []);
+
+    const totalWidth = (itemWidth + gap) * products.length - gap;
 
     const scrollToPosition = (newPosition) => {
         const boundedPosition = Math.max(0, Math.min(newPosition, products.length - visibleItems));
@@ -128,6 +137,7 @@ const ProductCarousel = ({ products }) => {
                 }}
             >
                 <motion.div
+                    ref={cardsWrapperRef}
                     className="flex gap-5 xl:gap-6"
                     style={{
                         x,
@@ -147,6 +157,7 @@ const ProductCarousel = ({ products }) => {
                     {products.map((product, index) => (
                         <motion.div
                             key={product._id}
+                            ref={index === 0 ? cardRef : null}
                             className="flex-shrink-0 w-[calc(100vw-45px)] sm:w-fit lg:w-[300px] snap-start"
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.98 }}

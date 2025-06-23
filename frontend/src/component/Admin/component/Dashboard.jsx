@@ -68,7 +68,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <MetaData title="Dashboard - Admin Panel" />
+      <MetaData title="Dashboard - Admin Panel -- ShopNest" />
 
       <h1 className="text-2xl font-bold mt-4 text-center">Admin Dashboard</h1>
 

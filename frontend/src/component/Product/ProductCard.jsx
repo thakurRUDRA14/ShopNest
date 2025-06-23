@@ -38,7 +38,7 @@ const ProductCard = ({ product }) => {
 
   const imageVariants = {
     initial: { scale: 1 },
-    hover: { scale: 1.1 },
+    hover: { scale: 1.04 },
     duration: 0.4
   };
 
@@ -76,15 +76,20 @@ const ProductCard = ({ product }) => {
         whileHover="hover"
       >
         {/* Product Image */}
-        <Link to={`/product/${product._id}`} className="block lg:relative lg:pb-[100%] lg:overflow-hidden">
-          <motion.img
-            src={product.images?.[0]?.url || '/placeholder-product.jpg'}
-            alt={product.name}
-            className="lg:absolute h-44 [@media(min-width:425px)]:min-w-36 lg:h-full lg:w-full object-cover"
-            variants={imageVariants}
-            initial="initial"
-            whileHover="hover"
-          />
+        <Link
+          to={`/product/${product._id}`}
+          className="block relative overflow-hidden flex-shrink-0 w-40 lg:w-full"
+        >
+          <div className="relative pb-[100%] overflow-hidden">
+            <motion.img
+              src={product.images?.[0]?.url || '/placeholder-product.jpg'}
+              alt={product.name}
+              className="absolute inset-0 w-full h-full object-cover"
+              variants={imageVariants}
+              initial="initial"
+              whileHover="hover"
+            />
+          </div>
 
           {/* Badge */}
           {product.stock < 50 && (
@@ -135,14 +140,14 @@ const ProductCard = ({ product }) => {
               initial="initial"
               whileHover="hover"
             >
-              <motion.button
+              {/* <motion.button
                 disabled={product.stock === 0}
                 className={`absolute sm:block text-xs bg-primary text-white px-3 py-1 rounded-full ${product.stock === 0 ? 'cursor-not-allowed' : ''}`}
                 onClick={addToCartHandler}
                 variants={buyNowVariants}
               >
                 <MdPayments className="inline-block mr-1" />Buy Now
-              </motion.button>
+              </motion.button> */}
               <motion.button
                 disabled={product.stock === 0}
                 className={`text-xs min-w-28 bg-gray-200 text-gray-700 px-3 py-1 rounded-full ${product.stock === 0 ? 'cursor-not-allowed' : ''}`}

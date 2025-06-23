@@ -117,7 +117,7 @@ const UpdateProduct = () => {
 
   return (
     <>
-      <MetaData title="Update Product" />
+      <MetaData title="Update Product - Admin -- ShopNest" />
       <div className="flex justify-center items-center bg-gray-100 min-h-screen py-10 px-4">
         <form
           className="bg-white shadow-md rounded-lg p-8 w-full max-w-lg space-y-6"

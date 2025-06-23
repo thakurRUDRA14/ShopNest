@@ -46,7 +46,7 @@ const createProductReview = asyncHandler(async (req, res, next) => {
 // Get all review
 const getAllReviews = asyncHandler(async (req, res, next) => {
 
-    const product = await Product.findById(req.query._id);
+    const product = await Product.findById(req.query._id).sort();
 
     if (!product) {
         return next(new ApiError("Product not found", 404))

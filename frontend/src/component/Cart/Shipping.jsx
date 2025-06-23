@@ -68,7 +68,7 @@ const Shipping = () => {
   return (
     isAuthenticated &&
     <>
-      <MetaData title="SHIPPING -- SHOPNEST" />
+      <MetaData title="Shipping -- ShopNest" />
       <motion.div layoutId="checkout-container"
         className="w-full max-w-md mx-auto mb-4 bg-white rounded-xl shadow-md overflow-hidden"
       >

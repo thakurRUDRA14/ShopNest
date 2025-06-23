@@ -127,7 +127,7 @@ const OrderList = () => {
 
   return (
     <>
-      <MetaData title="ALL ORDERS - Admin" />
+      <MetaData title="All Orders - Admin -- ShopNest" />
       <div className="flex flex-col items-center p-5 bg-gray-50 min-h-screen">
         <Typography
           variant="h4"

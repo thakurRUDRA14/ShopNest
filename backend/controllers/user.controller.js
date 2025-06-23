@@ -282,7 +282,7 @@ const updateProfile = asyncHandler(async (req, res, next) => {
 
 // Get all users  --Admin
 const getAllUsers = asyncHandler(async (req, res, next) => {
-    const users = await User.find()  // this is without paramenter so it finds all users
+    const users = await User.find().sort()  // this is without paramenter so it finds all users
 
     res.status(200).json(new ApiResponse(200, users, "All users fetched successfully."))
 })

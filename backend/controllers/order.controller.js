@@ -51,21 +51,21 @@ const myOrders = asyncHandler(async (req, res, next) => {
         return res.status(400).json({ message: "User not authenticated" });
     }
 
-    const resultPerPage = 3;
+    const resultsPerPage = 3;
     const ordersCount = await Order.countDocuments({ user: req.user._id });
 
-    const apiFeatures = new ApiFeatures(Order.find({ user: req.user._id }), req.query).pagination(resultPerPage); //creating query
+    const apiFeatures = new ApiFeatures(Order.find({ user: req.user._id }), req.query).sort().pagination(resultsPerPage); //creating query
 
     const orders = await apiFeatures.query; // Execute the query
 
     res.status(200).json(
-        new ApiResponse(200, { orders, ordersCount, resultPerPage }, "All orders fetched successfully")
+        new ApiResponse(200, { orders, ordersCount, resultsPerPage }, "All orders fetched successfully")
     );
 });
 
 //   Get all orders --Admin
 const getAllOrders = asyncHandler(async (req, res, next) => {
-    const orders = await Order.find();
+    const orders = await Order.find().sort();
 
     let totalAmount = 0;
 

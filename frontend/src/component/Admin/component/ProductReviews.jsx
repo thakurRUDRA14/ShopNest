@@ -89,7 +89,7 @@ const ProductReviews = () => {
 
   return (
     <>
-      <MetaData title="Product Reviews - Admin" />
+      <MetaData title="Product Reviews - Admin -- ShopNest" />
 
       <form
         className="bg-white shadow-lg rounded-lg p-6 max-w-lg mx-auto mt-9"

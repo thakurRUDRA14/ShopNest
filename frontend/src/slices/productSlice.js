@@ -4,10 +4,11 @@ import axiosInstance from '../utils/axiosInstance';
 // Get All Products
 export const getProduct = createAsyncThunk(
     'products/getProduct',
-    async ({ keyword = '', currentPage = 1, price = [0, 25000], category = null, subCategory = null, ratings = 0 } = {}, { rejectWithValue }) => {
+    async ({ keyword = '', currentPage = 1, price = [0, 25000], category = null, subCategory = null, ratings = 0, resultsPerPage = 12, sort = "createdAt", order = "desc" } = {}, { rejectWithValue }) => {
         try {
+            console.log(`Fetching products with keyword: ${keyword}, currentPage: ${currentPage}, price: ${price}, category: ${category}, subCategory: ${subCategory}, ratings: ${ratings}, resultsPerPage: ${resultsPerPage}, sort: ${sort}, order: ${order}`);
 
-            let link = `/product/all?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+            let link = `/product/all?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}&resultsPerPage=${resultsPerPage}&sort=${sort}&order=${order}`;
 
             if (category) {
                 link += `&category=${encodeURIComponent(category)}`;
@@ -44,7 +45,7 @@ const initialState = {
     products: [],
     productCount: 0,
     filteredProductsCount: 0,
-    resultPerPage: 0,
+    resultsPerPage: 0,
     productDetails: {},
     loading: false,
     error: null,
@@ -69,8 +70,7 @@ const productSlice = createSlice({
                 state.products = action.payload.data.products;
                 state.productCount = action.payload.data.productCount;
                 state.filteredProductsCount = action.payload.data.filteredProductsCount;
-                state.resultPerPage = action.payload.data.resultPerPage;
-
+                state.resultsPerPage = action.payload.data.resultsPerPage;
             })
             .addCase(getProduct.rejected, (state, action) => {
                 state.loading = false;

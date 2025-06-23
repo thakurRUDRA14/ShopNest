@@ -47,7 +47,7 @@ const initialState = {
     orders: [],
     orderDetails: null,
     ordersCount: 0,
-    resultPerPage: 0,
+    resultsPerPage: 0,
     loading: false,
     error: null
 }
@@ -84,7 +84,7 @@ const orderSlice = createSlice({
                 state.loading = false;
                 state.orders = action.payload.data.orders
                 state.ordersCount = action.payload.data.ordersCount;
-                state.resultPerPage = action.payload.data.resultPerPage;
+                state.resultsPerPage = action.payload.data.resultsPerPage;
             })
             .addCase(myOrders.rejected, (state, action) => {
                 state.loading = false;
