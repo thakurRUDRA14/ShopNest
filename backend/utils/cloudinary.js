@@ -15,10 +15,10 @@ const uploadOnCloudinary = async (localFilePath, folder, next) => {
         // Upload file to Cloudinary
         const response = await cloudinary.uploader.upload(localFilePath, {
             folder: `ShopNest/${folder}`,
-            height: 150,
-            width: 150,
-            crop: "scale",
             resource_type: "auto",
+            transformation: [
+                { quality: "auto:eco" }
+            ]
         });
         return response;
     } catch (error) {

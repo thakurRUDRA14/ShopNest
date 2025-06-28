@@ -17,33 +17,33 @@ const UpdateProfile = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    avatar: "",
+    avatar: null,
   })
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e, previewUrl) => {
     if (e.target.name === "avatar") {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setFormData(prev => ({ ...prev, avatar: e.target.files[0] }));
-          setAvatarPreview(reader.result);
-        }
-      };
-
-      reader.readAsDataURL(e.target.files[0]);
-    } else {
-      const { name, value } = e.target
-      setFormData(prev => ({
-        ...prev,
-        [name]: value
-      }))
+      setAvatarPreview(previewUrl);
     }
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateProfile(formData));
+
+    // Create FormData to properly handle file upload
+    const formDataToSend = new FormData();
+    formDataToSend.append('name', formData.name);
+    formDataToSend.append('email', formData.email);
+
+    if (formData.avatar) {
+      formDataToSend.append('avatar', formData.avatar, 'avatar.jpg');
+    }
+
+    dispatch(updateProfile(formDataToSend));
   };
 
   useEffect(() => {

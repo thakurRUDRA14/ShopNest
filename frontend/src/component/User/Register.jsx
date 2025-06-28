@@ -17,8 +17,8 @@ const Register = () => {
         name: "",
         email: "",
         password: "",
-        avatar: "",
-    })
+        avatar: null, // Changed to null to handle blob
+    });
 
     const redirect = location.search ? location.search.split('=')[1] : "/";
 
@@ -35,32 +35,41 @@ const Register = () => {
             toast.error(error);
             dispatch(clearErrors());
         }
-    }, [error, dispatch])
+    }, [error, dispatch]);
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e, previewUrl) => {
         if (e.target.name === "avatar") {
-            const reader = new FileReader();
-
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    setFormData(prev => ({ ...prev, avatar: e.target.files[0] }));
-                    setAvatarPreview(reader.result);
-                }
-            };
-
-            reader.readAsDataURL(e.target.files[0]);
+            // For avatar, we get the blob from the cropper
+            setFormData(prev => ({
+                ...prev,
+                avatar: e.target.value // This is the cropped image blob
+            }));
+            if (previewUrl) {
+                setAvatarPreview(previewUrl);
+            }
         } else {
-            const { name, value } = e.target
+            const { name, value } = e.target;
             setFormData(prev => ({
                 ...prev,
                 [name]: value
-            }))
+            }));
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(register(formData));
+
+        // Create FormData to properly handle file upload
+        const formDataToSend = new FormData();
+        formDataToSend.append('name', formData.name);
+        formDataToSend.append('email', formData.email);
+        formDataToSend.append('password', formData.password);
+
+        if (formData.avatar) {
+            formDataToSend.append('avatar', formData.avatar, 'avatar.jpg');
+        }
+
+        dispatch(register(formDataToSend));
     };
 
     return (
@@ -76,7 +85,7 @@ const Register = () => {
                 />
             </div>
         </>
-    )
-}
+    );
+};
 
-export default Register
+export default Register;
