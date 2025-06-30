@@ -40,7 +40,7 @@ const UpdateProfile = () => {
     formDataToSend.append('email', formData.email);
 
     if (formData.avatar) {
-      formDataToSend.append('avatar', formData.avatar, 'avatar.jpg');
+      typeof (formData.avatar) === "string" ? formDataToSend.append('avatar', formData.avatar) : formDataToSend.append('avatar', formData.avatar, 'avatar.jpg');
     }
 
     dispatch(updateProfile(formDataToSend));
@@ -80,7 +80,7 @@ const UpdateProfile = () => {
   return (
     <>
       <MetaData title="Update Profile -- ShopNest" />
-      <div className="w-full max-w-md mx-auto h-screen flex items-center justify-center p-4">
+      <div className="w-full max-w-md mx-auto flex items-center justify-center p-4">
         <AuthForm
           type="updateUser"
           formData={formData}

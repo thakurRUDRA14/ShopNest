@@ -18,28 +18,17 @@ const sale = {
   link: "/products",
 }
 
-const categories = [
-  { name: "Electronics", icon: "📱" },
-  { name: "Fashion", icon: "👕" },
-  { name: "Household", icon: "🏠" },
-  { name: "Beauty", icon: "💄" },
-  { name: "Sports", icon: "⚽" },
-  { name: "Toys", icon: "🧸" },
-  { name: "Books", icon: "📚" },
-  { name: "Groceries", icon: "🛒" },
-];
-
 const offers = [
   {
     image: "https://res.cloudinary.com/rudra-backend/image/upload/v1734907188/ShopNest/assets/Cover.jpg",
-    heading: "Summer Collection 2023",
+    heading: "Summer Collection 2025",
     description: "Discover our new arrivals with up to 50% off selected items",
     link: "/products",
     code: "SUMMER50"
   },
   {
     image: "https://example.com/winter-sale.jpg",
-    heading: "Winter Sale",
+    heading: "Summer Sale",
     description: "Get 30% off on all electronics this weekend",
     link: "/electronics",
     code: "WEEKEND30"
@@ -71,19 +60,19 @@ const features = [
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
+    name: "Mohit Chauhan",
     role: "Frequent Shopper",
     content: "This store has the best selection and prices. Delivery is always fast and products are high quality.",
     rating: 5,
   },
   {
-    name: "Michael Chen",
+    name: "Riya Chawla",
     role: "First-time Buyer",
     content: "Impressed with the customer service. They helped me choose the perfect gift for my wife's birthday.",
     rating: 4,
   },
   {
-    name: "Emily Rodriguez",
+    name: "Rudra Pratap Singh",
     role: "Loyal Customer",
     content: "I've been shopping here for years. The quality never disappoints and their return policy is fair.",
     rating: 5,
@@ -195,27 +184,6 @@ function Home() {
           <div className="absolute bottom-0 left-0 right-0 h-16 bg-white transform lg:-skew-y-2 origin-top-left"></div>
           <div className="absolute bottom-0 left-0 right-0 h-16 bg-white origin-top-left"></div>
         </section>}
-
-        {/* Categories Section */}
-        <section className="py-12 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-center mb-6 md:mb-12">Shop by Category</h2>
-
-            {/* Desktop View */}
-            <div className="grid grid-cols-4 lg:grid-cols-8 gap-4">
-              {categories.map((category, index) => (
-                <Link
-                  key={index}
-                  to={`/products?category=${category.name.toLowerCase()}`}
-                  className="bg-white py-3 md:p-4 rounded-lg shadow-md hover:shadow-xl transition duration-300 flex md:flex-col items-center justify-evenly gap-2 md:gap-0 whitespace-nowrap"
-                >
-                  <span className="text-xl md:text-2xl md:mb-2">{category.icon}</span>
-                  <span className="text-xs md:text-base md:font-medium text-gray-800 line-clamp-1">{category.name}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* Featured Products */}
         <section className="py-8 sm:py-12 lg:py-16">
@@ -454,26 +422,6 @@ function Home() {
                   className={`w-3 h-3 rounded-full ${currentSlide === index ? 'bg-indigo-600' : 'bg-gray-300'}`}
                 />
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Newsletter */}
-        <section className="py-8 md:py-12 bg-indigo-600 text-white">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 md:mb-4">Subscribe to Our Newsletter</h2>
-            <p className="text-base sm:text-lg md:text-xl mb-4 md:mb-6 max-w-2xl mx-auto">
-              Get the latest updates on new products and upcoming sales
-            </p>
-            <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-2 sm:gap-0">
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="flex-1 px-4 py-2 sm:py-3 rounded-lg sm:rounded-l-lg sm:rounded-r-none focus:outline-none text-gray-800"
-              />
-              <button className="bg-indigo-800 hover:bg-indigo-900 px-6 py-2 sm:py-3 rounded-lg sm:rounded-r-lg sm:rounded-l-none font-medium transition duration-300">
-                Subscribe
-              </button>
             </div>
           </div>
         </section>

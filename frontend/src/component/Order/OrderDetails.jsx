@@ -38,7 +38,7 @@ const OrderDetails = () => {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="flex items-center justify-center bg-gray-50">
         <h2 className="text-xl font-semibold text-gray-700">
           Please log in to view your order details.
         </h2>
@@ -50,7 +50,7 @@ const OrderDetails = () => {
   }
   if (!order) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="flex items-center justify-center bg-gray-50">
         <h2 className="text-xl font-semibold text-gray-700">
           Order not found.
         </h2>
@@ -61,7 +61,7 @@ const OrderDetails = () => {
   return (
     <>
       <MetaData title="Order Details -- ShopNest" />
-      <div className="min-h-screen w-full bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="w-full bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

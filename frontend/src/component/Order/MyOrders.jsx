@@ -54,7 +54,7 @@ const MyOrders = () => {
       {isAuthenticated && (
         <>
           <MetaData title={`${user.name}'s - Orders -- ShopNest`} />
-          <div className="min-h-screen w-full flex justify-center bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+          <div className="w-full flex justify-center bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}

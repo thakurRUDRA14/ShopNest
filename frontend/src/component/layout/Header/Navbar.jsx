@@ -11,30 +11,14 @@ function Navbar() {
     const { cartItems } = useSelector((state) => state.cartData)
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [activeLink, setActiveLink] = useState('')
-    const [scroll, setScroll] = useState(false)
 
 
     const NavLinks = [
         { path: '/', name: 'Home' },
         { path: '/collections', name: 'Shop' },
-        // { path: '/categories', name: 'Categories' },
         { path: '/about', name: 'About' },
         { path: '/contact', name: 'Contact' }
     ]
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 64) {
-                setScroll(true)
-            } else {
-                setScroll(false)
-            }
-        }
-        window.addEventListener("scroll", handleScroll)
-        return () => {
-            window.removeEventListener("scroll", handleScroll)
-        }
-    }, [])
 
     const handleLinkClick = (path) => {
         setActiveLink(path)
@@ -43,7 +27,7 @@ function Navbar() {
 
     return (
         <>
-            <header className={`bg-white shadow-sm sticky top-0 z-50 transition-all duration-500 ${scroll ? "shadow-lg" : ""}`}>
+            <header className={`bg-white shadow-sm sticky top-0 z-50 transition-all duration-500`}>
                 {/* Top Navigation Bar */}
                 <div className="container mx-auto px-4 py-3">
                     <div className="flex items-center justify-between">
@@ -134,7 +118,7 @@ function Navbar() {
                 )}
 
                 {/* Desktop Navigation */}
-                <nav className={`hidden md:block bg-gradient-to-r from-indigo-600 to-indigo-700 text-white transition-all duration-500 ${scroll ? "fixed top-0 left-0 right-0 shadow-xl" : ""}`}>
+                <nav className={`hidden md:block bg-gradient-to-r from-indigo-600 to-indigo-700 text-white transition-all duration-500`}>
                     <div className="container mx-auto px-4">
                         <div className="flex items-center justify-between py-3">
                             <div className="flex items-center space-x-6">

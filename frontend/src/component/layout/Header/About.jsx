@@ -68,7 +68,7 @@ const About = () => {
     return (
         <>
             <MetaData title="About -- ShopNest" />
-            <div className="w-full min-h-screen bg-gray-50">
+            <div className="w-full bg-gray-50">
                 {/* Hero Section with Parallax Effect */}
                 <motion.div
                     initial={{ opacity: 0 }}
@@ -246,7 +246,7 @@ const About = () => {
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center gap-4">
                             <motion.a
-                                href='https://github.com/thakurRUDRA14/ShopNest'
+                                href='https://shopnest-onlinestore.vercel.app'
                                 target='_blank'
                                 whileHover={{
                                     scale: 1.05,

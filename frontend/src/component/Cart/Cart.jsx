@@ -61,7 +61,7 @@ function Cart() {
 
   return (<>
     <MetaData title="Cart -- ShopNest" />
-    <div className="container min-h-screen bg-gray-50 pb-20">
+    <div className="w-full bg-gray-50 pb-20">
       <AnimatePresence>
         {cartItems.length === 0 ? (
           <motion.div
@@ -94,7 +94,7 @@ function Cart() {
             initial="hidden"
             animate="show"
             variants={containerVariants}
-            className=" mx-auto px-4 py-8"
+            className="container mx-auto px-4 py-8"
           >
             <motion.div
               variants={headerVariants}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useLocation } from "react-router";
 import { motion, AnimatePresence } from "motion/react";
 import Loader from "../layout/Loader/Loader.jsx";
 import ProductCard from "./ProductCard.jsx";
@@ -9,7 +9,9 @@ import Filters from "./Filters.jsx";
 import Pagination from "./Pagination.jsx";
 
 const Products = () => {
-  const { keyword } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const keyword = searchParams.get("search") ? searchParams.get("search") : "";
   const [currentPage, setCurrentPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
 
@@ -125,7 +127,7 @@ const Products = () => {
                 )}
               </>
             ) : (
-              <div className="h-screen text-center py-12 bg-white rounded-xl shadow-sm border border-gray-100">
+              <div className="h-full text-center py-12 bg-white rounded-xl shadow-sm border border-gray-50">
                 <h3 className="text-xl font-medium text-gray-600">No products found</h3>
                 <p className="text-gray-500 mt-2">Try adjusting your filters or search term</p>
               </div>

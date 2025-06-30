@@ -8,7 +8,7 @@ import MetaData from '../MetaData';
 const developerInfo = {
     name: "Rudra Pratap Singh",
     role: "Full Stack Developer",
-    email: "tempmail.backend@gmail.com",
+    email: "engrudra14@gmail.com",
     phoneNo: "+91 1234567890",
     location: "Ghaziabad, India",
     github: "thakurRUDRA14",
@@ -60,7 +60,7 @@ const ContactUs = () => {
     return (
         <>
             <MetaData title="Contact Us -- ShopNest" />
-            <div className="w-full min-h-screen bg-gray-50">
+            <div className="w-full bg-gray-50">
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}

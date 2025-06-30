@@ -23,9 +23,11 @@ function App() {
 
 
   return (
-    <div className='h-screen'>
-      <Navbar />
-      <div className='flex justify-center'><Outlet /></div>
+    <div className='flex flex-col'>
+      <div className='flex flex-col min-h-screen'>
+        <Navbar />
+        <div className='grow flex h-full justify-center align-middle'><Outlet /></div>
+      </div>
       <Footer />
     </div>
   );

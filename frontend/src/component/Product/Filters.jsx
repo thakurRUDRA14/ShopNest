@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, getProduct } from "../../slices/productSlice.js";
 import { toast } from 'react-toastify';
-import { useParams } from "react-router";
+import { useLocation } from "react-router";
 import { motion, AnimatePresence } from "motion/react";
 import PriceRangeSlider from "./PriceRangeSlider.jsx";
 
@@ -53,7 +53,10 @@ const categories = [
 
 const Filters = ({ currentPage }) => {
     const dispatch = useDispatch();
-    const { keyword } = useParams();
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+
+    const keyword = searchParams.get("search") ? searchParams.get("search") : "";
 
     const [price, setPrice] = useState([0, 25000]);
     const [category, setCategory] = useState("");
