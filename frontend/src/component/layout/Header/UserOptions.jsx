@@ -101,12 +101,12 @@ function UserOptions({ user, mobile = false }) {
             >
                 <img
                     className="h-8 w-8 rounded-full object-cover border-2 border-white group-hover:border-indigo-400 transition-all duration-300"
-                    src={user.avatar?.url ? user.avatar.url : ProfileImg}
+                    src={user?.avatar?.url || ProfileImg}
                     alt="Profile"
                 />
                 {!mobile && (
                     <span className="text-gray-700 group-hover:text-indigo-600 transition-colors duration-300 hidden md:inline-block">
-                        {user.name.split(" ")[0]}
+                        {user?.name?.split(" ")[0] || "User"}
                     </span>
                 )}
             </button>
