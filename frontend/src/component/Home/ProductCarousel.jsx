@@ -138,7 +138,7 @@ const ProductCarousel = ({ products }) => {
             >
                 <motion.div
                     ref={cardsWrapperRef}
-                    className="flex gap-5 xl:gap-6"
+                    className="flex gap-4 sm:gap-5 xl:gap-6 px-2"
                     style={{
                         x,
                         width: `${totalWidth}px`,
@@ -158,7 +158,7 @@ const ProductCarousel = ({ products }) => {
                         <motion.div
                             key={product._id}
                             ref={index === 0 ? cardRef : null}
-                            className="flex-shrink-0 w-[calc(100vw-45px)] sm:w-fit lg:w-[300px] snap-start"
+                            className="flex-shrink-0 w-[90vw] sm:w-[240px] md:w-[260px] lg:w-[280px] snap-start"
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.98 }}
                         >
