@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import { HiOutlineShoppingBag, HiOutlineTruck, HiOutlineShieldCheck, HiOutlineCreditCard } from "react-icons/hi";
-import ProductCard from "../Product/ProductCard.jsx";
+import ProductCard from "./ProductCard.jsx";
 import MetaData from "../layout/MetaData";
 import { clearErrors, getProduct } from "../../slices/productSlice.js";
 import { useSelector, useDispatch } from "react-redux";
@@ -206,7 +206,7 @@ function Home() {
             </div>
 
             {/* Desktop/Tablet Grid */}
-            <div className="hidden md:grid grid-cols-1 lg:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-5 lg:gap-6 xl:gap-7">
+            <div className="hidden md:grid md:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-6 gap-4 sm:gap-5 lg:gap-6 xl:gap-7">
               {featuredProducts.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}

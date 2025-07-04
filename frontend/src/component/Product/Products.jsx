@@ -107,7 +107,7 @@ const Products = () => {
           <div className="flex-1">
             {products && products.length > 0 ? (
               <>
-                <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-4 xl:gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4 xl:gap-6">
                   {products.map((product) => (
                     <motion.div
                       key={product._id}

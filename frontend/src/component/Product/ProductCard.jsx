@@ -72,13 +72,13 @@ const ProductCard = ({ product }) => {
     >
       <motion.div
         layoutId={`product-${product._id}`}
-        className="flex justify-center h-full min-w-fit gap-2 lg:block bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow duration-300"
+        className="flex justify-center h-full sm:gap-1 sm:block bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow duration-300"
         whileHover="hover"
       >
         {/* Product Image */}
         <Link
           to={`/product/${product._id}`}
-          className="block relative overflow-hidden flex-shrink-0 w-40 lg:w-full"
+          className="block relative overflow-hidden flex-shrink-0 w-28 sm:w-full"
         >
           <div className="relative pb-[100%] overflow-hidden">
             <motion.img
@@ -106,9 +106,9 @@ const ProductCard = ({ product }) => {
         </Link>
 
         {/* Product Info */}
-        <div className="flex flex-col justify-center w-full lg:w-auto p-4">
+        <div className="flex flex-col justify-center w-full sm:w-auto px-2 sm:p-4">
           <Link to={`/product/${product._id}`} className="flex justify-between items-start mb-1">
-            <h3 className="text-gray-800 font-medium text-sm md:text-base line-clamp-2 flex-1">
+            <h3 className="text-gray-800 font-medium text-sm sm:text-base line-clamp-2 flex-1">
               {product.name}
             </h3>
             <span className="font-bold text-primary text-lg ml-2">
@@ -150,11 +150,11 @@ const ProductCard = ({ product }) => {
               </motion.button> */}
               <motion.button
                 disabled={product.stock === 0}
-                className={`text-xs min-w-28 bg-gray-200 text-gray-700 px-3 py-1 rounded-full ${product.stock === 0 ? 'cursor-not-allowed' : ''}`}
+                className={`text-xs min-w-fit sm:min-w-28 bg-gray-200 text-gray-700 px-3 py-1 rounded-full ${product.stock === 0 ? 'cursor-not-allowed' : ''}`}
                 onClick={addToCartHandler}
                 variants={buttonVariants}
               >
-                <FiShoppingCart className="inline-block mr-1" />Add to Cart
+                <FiShoppingCart className="inline-block mr-1" /><span className="hidden sm:inline">Add to Cart</span>
               </motion.button>
             </motion.div>
           </div>

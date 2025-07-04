@@ -1,7 +1,7 @@
 import { motion, useMotionValue, animate } from 'framer-motion';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { useRef, useState, useEffect } from 'react';
-import ProductCard from '../Product/ProductCard';
+import ProductCard from './ProductCard';
 
 const ProductCarousel = ({ products }) => {
     const carouselRef = useRef();
@@ -138,7 +138,7 @@ const ProductCarousel = ({ products }) => {
             >
                 <motion.div
                     ref={cardsWrapperRef}
-                    className="flex gap-4 sm:gap-5 xl:gap-6 px-2"
+                    className="flex gap-2 sm:gap-3 xl:gap-5 px-2"
                     style={{
                         x,
                         width: `${totalWidth}px`,
@@ -158,7 +158,7 @@ const ProductCarousel = ({ products }) => {
                         <motion.div
                             key={product._id}
                             ref={index === 0 ? cardRef : null}
-                            className="flex-shrink-0 w-[90vw] sm:w-[240px] md:w-[260px] lg:w-[280px] snap-start"
+                            className="flex-shrink-0 w-40 sm:w-52 snap-start"
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.98 }}
                         >
